@@ -24,40 +24,45 @@ public class VictuzWebDatabaseContext : DbContext
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         // specificeer
-        modelBuilder.Entity<Gathering>()
-            .HasMany(a => a.RegisteredUsers)
-            .WithMany(a => a.RegisteredForGatherings)
+        modelBuilder
+            .Entity<Gathering>()
+            .HasMany(gathering => gathering.RegisteredUsers)
+            .WithMany(user => user.RegisteredForGatherings)
             .UsingEntity<Dictionary<string, object>>(
-            "UserGathering",
-            j => j.HasOne<User>().WithMany().HasForeignKey("UsersId").OnDelete(DeleteBehavior.Restrict),
-        D => D.HasOne<Gathering>().WithMany().HasForeignKey("GatheringId").OnDelete(DeleteBehavior.Restrict)
+                "UserGathering",
+                columnLeft =>
+                    columnLeft
+                        .HasOne<User>()
+                        .WithMany()
+                        .HasForeignKey("UsersId")
+                        .OnDelete(DeleteBehavior.Restrict),
+                columnRight =>
+                    columnRight
+                        .HasOne<Gathering>()
+                        .WithMany()
+                        .HasForeignKey("GatheringId")
+                        .OnDelete(DeleteBehavior.Restrict)
             );
 
-        modelBuilder.Entity<Role>()
-            .HasMany(a => a.UsersWithRole)
-            .WithOne(a => a.Role)
-                .OnDelete(DeleteBehavior.Restrict); // Prevent cascade delete
+        modelBuilder
+            .Entity<Role>()
+            .HasMany(role => role.UsersWithRole)
+            .WithOne(user => user.Role)
+            .OnDelete(DeleteBehavior.Restrict); // Prevent cascade delete
 
-
-        modelBuilder.Entity<Suggestion>()
-            .HasOne(a => a.SuggestedBy)
-            .WithMany(a => a.Suggestions)
-                .OnDelete(DeleteBehavior.Restrict); // Prevent cascade delete
-
+        modelBuilder
+            .Entity<Suggestion>()
+            .HasOne(suggestion => suggestion.SuggestedBy)
+            .WithMany(user => user.Suggestions)
+            .OnDelete(DeleteBehavior.Restrict); // Prevent cascade delete
 
         modelBuilder.Entity<User>();
-            //.HasMany(a => a.RegisteredForGatherings)
-            //.WithMany(a => a.RegisteredUsers)
-            //.UsingEntity<Dictionary<string, object>>(
-            //"UserGathering",
-            //j => j.HasOne<Gathering>().WithMany().HasForeignKey("GatheringId"),
-            //D => D.HasOne<User>().WithMany().HasForeignKey("UsersId")
-            //);
-
-
-
+        //.HasMany(a => a.RegisteredForGatherings)
+        //.WithMany(a => a.RegisteredUsers)
+        //.UsingEntity<Dictionary<string, object>>(
+        //"UserGathering",
+        //j => j.HasOne<Gathering>().WithMany().HasForeignKey("GatheringId"),
+        //D => D.HasOne<User>().WithMany().HasForeignKey("UsersId")
+        //);
     }
-
-
-
 }
