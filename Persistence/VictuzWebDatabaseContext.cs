@@ -34,13 +34,13 @@ public class VictuzWebDatabaseContext : DbContext
                     columnLeft
                         .HasOne<User>()
                         .WithMany()
-                        .HasForeignKey("UsersIdentifier")
+                        .HasForeignKey("UsersId")
                         .OnDelete(DeleteBehavior.Restrict),
                 columnRight =>
                     columnRight
                         .HasOne<Gathering>()
                         .WithMany()
-                        .HasForeignKey("GatheringIdentifier")
+                        .HasForeignKey("GatheringId")
                         .OnDelete(DeleteBehavior.Restrict)
             );
 
