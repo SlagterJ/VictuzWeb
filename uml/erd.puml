@@ -1,0 +1,22 @@
+@startuml
+hide empty members
+hide circle
+
+skinparam Padding 8
+skinparam Linetype ortho
+
+class User {}
+class Role{}
+class Suggestion{}
+class Activity{}
+class UserSuggestion{}
+class UserActivity{}
+
+Role --o{ User
+User --o{ UserActivity
+Activity --o{ UserActivity
+User --o{ UserSuggestion
+Suggestion --o{ UserSuggestion
+
+
+@enduml
