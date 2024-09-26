@@ -6,7 +6,6 @@ title Class-diagram VictuzWeb
 abstract Entity {
   + Guid Identifier
   + DateTime CreatedAt
-  + DateTime UpdatedAt
 }
 
 class User {
