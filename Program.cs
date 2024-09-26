@@ -1,3 +1,5 @@
+using VictuzWeb.Persistence;
+
 namespace VictuzWeb;
 
 public class Program
@@ -8,6 +10,7 @@ public class Program
 
         // Add services to the container.
         builder.Services.AddControllersWithViews();
+        builder.Services.AddDbContext<VictuzWebDatabaseContext>();
 
         var app = builder.Build();
 
@@ -26,9 +29,7 @@ public class Program
 
         app.UseAuthorization();
 
-        app.MapControllerRoute(
-            name: "default",
-            pattern: "{controller=Home}/{action=Index}/{id?}");
+        app.MapControllerRoute(name: "default", pattern: "{controller=Home}/{action=Index}/{id?}");
 
         app.Run();
     }
