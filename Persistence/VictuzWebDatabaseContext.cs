@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using VictuzWeb.Models;
 
 namespace VictuzWeb.Persistence;
 
@@ -7,6 +8,11 @@ namespace VictuzWeb.Persistence;
 /// </summary>
 public class VictuzWebDatabaseContext : DbContext
 {
+    public DbSet<Gathering> Gatherings { get; set; }
+    public DbSet<Role> Roles { get; set; }
+    public DbSet<Suggestion> Suggestions { get; set; }
+    public DbSet<User> Users { get; set; }
+
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
         string connection =
