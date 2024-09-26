@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace VictuzWeb.AbstractModels;
 
@@ -12,4 +13,10 @@ public abstract class Entity
     /// </summary>
     [Key]
     public Guid Identifier { get; set; }
+
+    /// <summary>
+    /// The date and time that this entity was created at.
+    /// </summary>
+    [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
+    public DateTime CreatedAt { get; set; }
 }
