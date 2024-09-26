@@ -14,7 +14,7 @@ class User {
   + DateOnly BirthDate
   + Role Role
   + IEnumerable<Suggestion> Suggestions
-  + IEnumerable<Activity> RegisteredFor
+  + IEnumerable<Activity> RegisteredForActivities
 }
 Entity <|-- User
 
@@ -39,6 +39,7 @@ User "0:n" -- "0:n" Suggestion
 
 class Activity {
   + int MaxUsers
+  + IEnumerable<Activity> RegisteredUsers
   + DateOnly DeadlineDate
   + DateTime BeginDateTime
   + DateTime EndDateTime
