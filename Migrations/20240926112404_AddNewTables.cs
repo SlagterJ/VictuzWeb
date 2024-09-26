@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace VictuzWeb.Migrations
 {
     /// <inheritdoc />
-    public partial class AddClassDiagramModels : Migration
+    public partial class AddNewTables : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -43,7 +43,7 @@ namespace VictuzWeb.Migrations
                         column: x => x.RoleIdentifier,
                         principalTable: "Roles",
                         principalColumn: "Identifier",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -69,42 +69,42 @@ namespace VictuzWeb.Migrations
                         column: x => x.SuggestedByIdentifier,
                         principalTable: "Users",
                         principalColumn: "Identifier",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
-                name: "GatheringUser",
+                name: "UserGathering",
                 columns: table => new
                 {
-                    RegisteredForGatheringsIdentifier = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    RegisteredUsersIdentifier = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                    GatheringId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    UsersId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_GatheringUser", x => new { x.RegisteredForGatheringsIdentifier, x.RegisteredUsersIdentifier });
+                    table.PrimaryKey("PK_UserGathering", x => new { x.GatheringId, x.UsersId });
                     table.ForeignKey(
-                        name: "FK_GatheringUser_Suggestions_RegisteredForGatheringsIdentifier",
-                        column: x => x.RegisteredForGatheringsIdentifier,
+                        name: "FK_UserGathering_Suggestions_GatheringId",
+                        column: x => x.GatheringId,
                         principalTable: "Suggestions",
                         principalColumn: "Identifier",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_GatheringUser_Users_RegisteredUsersIdentifier",
-                        column: x => x.RegisteredUsersIdentifier,
+                        name: "FK_UserGathering_Users_UsersId",
+                        column: x => x.UsersId,
                         principalTable: "Users",
                         principalColumn: "Identifier",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
-
-            migrationBuilder.CreateIndex(
-                name: "IX_GatheringUser_RegisteredUsersIdentifier",
-                table: "GatheringUser",
-                column: "RegisteredUsersIdentifier");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Suggestions_SuggestedByIdentifier",
                 table: "Suggestions",
                 column: "SuggestedByIdentifier");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_UserGathering_UsersId",
+                table: "UserGathering",
+                column: "UsersId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Users_RoleIdentifier",
@@ -116,7 +116,7 @@ namespace VictuzWeb.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "GatheringUser");
+                name: "UserGathering");
 
             migrationBuilder.DropTable(
                 name: "Suggestions");

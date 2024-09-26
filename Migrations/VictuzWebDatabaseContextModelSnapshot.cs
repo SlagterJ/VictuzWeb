@@ -22,19 +22,19 @@ namespace VictuzWeb.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("GatheringUser", b =>
+            modelBuilder.Entity("UserGathering", b =>
                 {
-                    b.Property<Guid>("RegisteredForGatheringsIdentifier")
+                    b.Property<Guid>("GatheringId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("RegisteredUsersIdentifier")
+                    b.Property<Guid>("UsersId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.HasKey("RegisteredForGatheringsIdentifier", "RegisteredUsersIdentifier");
+                    b.HasKey("GatheringId", "UsersId");
 
-                    b.HasIndex("RegisteredUsersIdentifier");
+                    b.HasIndex("UsersId");
 
-                    b.ToTable("GatheringUser");
+                    b.ToTable("UserGathering");
                 });
 
             modelBuilder.Entity("VictuzWeb.Models.Role", b =>
@@ -143,18 +143,18 @@ namespace VictuzWeb.Migrations
                     b.HasDiscriminator().HasValue("Gathering");
                 });
 
-            modelBuilder.Entity("GatheringUser", b =>
+            modelBuilder.Entity("UserGathering", b =>
                 {
                     b.HasOne("VictuzWeb.Models.Gathering", null)
                         .WithMany()
-                        .HasForeignKey("RegisteredForGatheringsIdentifier")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .HasForeignKey("GatheringId")
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("VictuzWeb.Models.User", null)
                         .WithMany()
-                        .HasForeignKey("RegisteredUsersIdentifier")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .HasForeignKey("UsersId")
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
                 });
 
@@ -163,7 +163,7 @@ namespace VictuzWeb.Migrations
                     b.HasOne("VictuzWeb.Models.User", "SuggestedBy")
                         .WithMany("Suggestions")
                         .HasForeignKey("SuggestedByIdentifier")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("SuggestedBy");
@@ -174,7 +174,7 @@ namespace VictuzWeb.Migrations
                     b.HasOne("VictuzWeb.Models.Role", "Role")
                         .WithMany("UsersWithRole")
                         .HasForeignKey("RoleIdentifier")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Role");
