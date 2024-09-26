@@ -8,13 +8,13 @@ skinparam Linetype ortho
 class User {}
 class Role{}
 class Suggestion{}
-class Activity{}
+class Gathering{}
 class UserSuggestion{}
-class UserActivity{}
+class UserGathering{}
 
 Role --o{ User
-User --o{ UserActivity
-Activity --o{ UserActivity
+User --o{ UserGathering
+Gathering --o{ UserGathering
 User --o{ UserSuggestion
 Suggestion --o{ UserSuggestion
 
