@@ -1,0 +1,51 @@
+@startuml class
+hide empty members
+title Class-diagram VictuzWeb
+
+
+abstract Entity {
+  + Guid Identifier
+  + DateTime CreatedAt
+  + DateTime UpdatedAt
+}
+
+class User {
+  + IEnumerable<string> Firstnames
+  + string Surname
+  + DateOnly BirthDate
+  + Role Role
+  + IEnumerable<Suggestion> Suggestions
+  + IEnumerable<Activity> RegisteredFor
+}
+Entity <|-- User
+
+class Role {
+  + string Name
+  + IEnumerable<User> UsersWithRole
+}
+Entity <|-- Role
+
+User "0:n" -- "1" Role
+
+class Suggestion {
+  + string Name
+  + string Description
+  + User SuggestedBy
+
+  + Activity ToActivity()
+}
+Entity <|-- Suggestion
+
+User "0:n" -- "0:n" Suggestion
+
+class Activity {
+  + int MaxUsers
+  + DateOnly DeadlineDate
+  + DateTime BeginDateTime
+  + DateTime EndDateTime
+}
+Suggestion <|-- Activity
+
+User "0:n" -- "0:n" Activity
+
+@enduml
