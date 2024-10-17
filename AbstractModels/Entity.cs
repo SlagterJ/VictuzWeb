@@ -9,14 +9,15 @@ namespace VictuzWeb.AbstractModels;
 public abstract class Entity
 {
     /// <summary>
-    /// Globally unique identifier for this entity. Uses UUIDv4.
+    /// Globally unique identifier for this entity.
     /// </summary>
     [Key]
-    public Guid Identifier { get; set; }
+    [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+    public required ulong Identifier { get; set; }
 
     /// <summary>
     /// The date and time that this entity was created at.
     /// </summary>
     [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
-    public DateTime CreatedAt { get; set; }
+    public required DateTime CreatedAt { get; set; }
 }
