@@ -4,7 +4,7 @@ title Class-diagram VictuzWeb
 
 
 abstract Entity {
-  + Guid Identifier
+  + ulong Identifier
   + DateTime CreatedAt
 }
 
