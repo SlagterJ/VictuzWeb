@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace VictuzWeb.Migrations
 {
     /// <inheritdoc />
-    public partial class AddNewTables : Migration
+    public partial class InitialCreate : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -15,7 +15,8 @@ namespace VictuzWeb.Migrations
                 name: "Roles",
                 columns: table => new
                 {
-                    Identifier = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Identifier = table.Column<decimal>(type: "decimal(20,0)", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
@@ -28,11 +29,12 @@ namespace VictuzWeb.Migrations
                 name: "Users",
                 columns: table => new
                 {
-                    Identifier = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Identifier = table.Column<decimal>(type: "decimal(20,0)", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     Firstname = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Surname = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     BirthDate = table.Column<DateOnly>(type: "date", nullable: false),
-                    RoleIdentifier = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    RoleIdentifier = table.Column<decimal>(type: "decimal(20,0)", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
@@ -50,10 +52,11 @@ namespace VictuzWeb.Migrations
                 name: "Suggestions",
                 columns: table => new
                 {
-                    Identifier = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Identifier = table.Column<decimal>(type: "decimal(20,0)", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    SuggestedByIdentifier = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    SuggestedByIdentifier = table.Column<decimal>(type: "decimal(20,0)", nullable: false),
                     Discriminator = table.Column<string>(type: "nvarchar(13)", maxLength: 13, nullable: false),
                     MaxUsers = table.Column<int>(type: "int", nullable: true),
                     DeadlineDate = table.Column<DateOnly>(type: "date", nullable: true),
@@ -76,21 +79,21 @@ namespace VictuzWeb.Migrations
                 name: "UserGathering",
                 columns: table => new
                 {
-                    GatheringId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    UsersId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                    GatheringIdentifier = table.Column<decimal>(type: "decimal(20,0)", nullable: false),
+                    UsersIdentifier = table.Column<decimal>(type: "decimal(20,0)", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_UserGathering", x => new { x.GatheringId, x.UsersId });
+                    table.PrimaryKey("PK_UserGathering", x => new { x.GatheringIdentifier, x.UsersIdentifier });
                     table.ForeignKey(
-                        name: "FK_UserGathering_Suggestions_GatheringId",
-                        column: x => x.GatheringId,
+                        name: "FK_UserGathering_Suggestions_GatheringIdentifier",
+                        column: x => x.GatheringIdentifier,
                         principalTable: "Suggestions",
                         principalColumn: "Identifier",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_UserGathering_Users_UsersId",
-                        column: x => x.UsersId,
+                        name: "FK_UserGathering_Users_UsersIdentifier",
+                        column: x => x.UsersIdentifier,
                         principalTable: "Users",
                         principalColumn: "Identifier",
                         onDelete: ReferentialAction.Restrict);
@@ -102,9 +105,9 @@ namespace VictuzWeb.Migrations
                 column: "SuggestedByIdentifier");
 
             migrationBuilder.CreateIndex(
-                name: "IX_UserGathering_UsersId",
+                name: "IX_UserGathering_UsersIdentifier",
                 table: "UserGathering",
-                column: "UsersId");
+                column: "UsersIdentifier");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Users_RoleIdentifier",

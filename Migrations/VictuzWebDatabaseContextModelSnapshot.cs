@@ -24,24 +24,26 @@ namespace VictuzWeb.Migrations
 
             modelBuilder.Entity("UserGathering", b =>
                 {
-                    b.Property<Guid>("GatheringId")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<decimal>("GatheringIdentifier")
+                        .HasColumnType("decimal(20,0)");
 
-                    b.Property<Guid>("UsersId")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<decimal>("UsersIdentifier")
+                        .HasColumnType("decimal(20,0)");
 
-                    b.HasKey("GatheringId", "UsersId");
+                    b.HasKey("GatheringIdentifier", "UsersIdentifier");
 
-                    b.HasIndex("UsersId");
+                    b.HasIndex("UsersIdentifier");
 
-                    b.ToTable("UserGathering", (string)null);
+                    b.ToTable("UserGathering");
                 });
 
             modelBuilder.Entity("VictuzWeb.Models.Role", b =>
                 {
-                    b.Property<Guid>("Identifier")
+                    b.Property<decimal>("Identifier")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("decimal(20,0)");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<decimal>("Identifier"));
 
                     b.Property<DateTime>("CreatedAt")
                         .ValueGeneratedOnAddOrUpdate()
@@ -53,14 +55,16 @@ namespace VictuzWeb.Migrations
 
                     b.HasKey("Identifier");
 
-                    b.ToTable("Roles", (string)null);
+                    b.ToTable("Roles");
                 });
 
             modelBuilder.Entity("VictuzWeb.Models.Suggestion", b =>
                 {
-                    b.Property<Guid>("Identifier")
+                    b.Property<decimal>("Identifier")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("decimal(20,0)");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<decimal>("Identifier"));
 
                     b.Property<DateTime>("CreatedAt")
                         .ValueGeneratedOnAddOrUpdate()
@@ -79,14 +83,14 @@ namespace VictuzWeb.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid>("SuggestedByIdentifier")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<decimal>("SuggestedByIdentifier")
+                        .HasColumnType("decimal(20,0)");
 
                     b.HasKey("Identifier");
 
                     b.HasIndex("SuggestedByIdentifier");
 
-                    b.ToTable("Suggestions", (string)null);
+                    b.ToTable("Suggestions");
 
                     b.HasDiscriminator().HasValue("Suggestion");
 
@@ -95,9 +99,11 @@ namespace VictuzWeb.Migrations
 
             modelBuilder.Entity("VictuzWeb.Models.User", b =>
                 {
-                    b.Property<Guid>("Identifier")
+                    b.Property<decimal>("Identifier")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("decimal(20,0)");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<decimal>("Identifier"));
 
                     b.Property<DateOnly>("BirthDate")
                         .HasColumnType("date");
@@ -110,8 +116,8 @@ namespace VictuzWeb.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid>("RoleIdentifier")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<decimal>("RoleIdentifier")
+                        .HasColumnType("decimal(20,0)");
 
                     b.Property<string>("Surname")
                         .IsRequired()
@@ -121,7 +127,7 @@ namespace VictuzWeb.Migrations
 
                     b.HasIndex("RoleIdentifier");
 
-                    b.ToTable("Users", (string)null);
+                    b.ToTable("Users");
                 });
 
             modelBuilder.Entity("VictuzWeb.Models.Gathering", b =>
@@ -147,13 +153,13 @@ namespace VictuzWeb.Migrations
                 {
                     b.HasOne("VictuzWeb.Models.Gathering", null)
                         .WithMany()
-                        .HasForeignKey("GatheringId")
+                        .HasForeignKey("GatheringIdentifier")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("VictuzWeb.Models.User", null)
                         .WithMany()
-                        .HasForeignKey("UsersId")
+                        .HasForeignKey("UsersIdentifier")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
                 });
