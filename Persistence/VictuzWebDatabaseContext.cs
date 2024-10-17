@@ -8,9 +8,24 @@ namespace VictuzWeb.Persistence;
 /// </summary>
 public class VictuzWebDatabaseContext : DbContext
 {
+    /// <summary>
+    /// Gatherings set.
+    /// </summary>
     public DbSet<Gathering> Gatherings { get; set; }
+
+    /// <summary>
+    /// Roles set.
+    /// </summary>
     public DbSet<Role> Roles { get; set; }
+
+    /// <summary>
+    /// Suggestions set.
+    /// </summary>
     public DbSet<Suggestion> Suggestions { get; set; }
+
+    /// <summary>
+    /// Users set.
+    /// </summary>
     public DbSet<User> Users { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
