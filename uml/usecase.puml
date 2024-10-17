@@ -1,0 +1,26 @@
+@startuml usecase
+left to right direction
+
+actor "Lid" as lid
+actor "Beheerder" as beheerder
+
+rectangle "Systeem" {
+  usecase "1. Behandelen activiteit" as uc1
+  usecase "2. Indienen suggestie" as uc2
+  usecase "3. Aanvragen club" as uc3
+  usecase "4. Beoordelen clubaanvraag" as uc4
+  usecase "5. Rapport inzien" as uc5
+  usecase "6. Activiteitsbeperkingen instellen" as uc6
+}
+
+lid -- uc1
+lid -- uc2
+lid -- uc3
+
+beheerder -- uc4
+beheerder -- uc6
+
+lid -- uc5
+beheerder -- uc5
+
+@enduml
