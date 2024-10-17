@@ -15,7 +15,7 @@ public class VictuzWebDatabaseContext : DbContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
-        string connection =
+        var connection =
             @"Data Source=.;Initial Catalog=VictuzWeb;Integrated Security=true;TrustServerCertificate=true;";
 
         optionsBuilder.UseSqlServer(connection);
@@ -34,13 +34,13 @@ public class VictuzWebDatabaseContext : DbContext
                     columnLeft
                         .HasOne<User>()
                         .WithMany()
-                        .HasForeignKey("UsersId")
+                        .HasForeignKey("UsersIdentifier")
                         .OnDelete(DeleteBehavior.Restrict),
                 columnRight =>
                     columnRight
                         .HasOne<Gathering>()
                         .WithMany()
-                        .HasForeignKey("GatheringId")
+                        .HasForeignKey("GatheringIdentifier")
                         .OnDelete(DeleteBehavior.Restrict)
             );
 
