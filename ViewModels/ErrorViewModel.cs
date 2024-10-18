@@ -1,4 +1,4 @@
-namespace VictuzWeb.ViewModel;
+namespace VictuzWeb.ViewModels;
 
 /// <summary>
 /// Viewmodel for an error view.
