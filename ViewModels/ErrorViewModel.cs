@@ -8,10 +8,10 @@ public class ErrorViewModel
     /// <summary>
     /// Identifier for this request.
     /// </summary>
-    public string? RequestId { get; set; }
+    public string? RequestIdentifier { get; set; }
 
     /// <summary>
-    /// Should the request Id be shown?
+    /// Should the request Identifier be shown?
     /// </summary>
-    public bool ShowRequestId => !string.IsNullOrEmpty(RequestId);
+    public bool ShowRequestIdentifier => !string.IsNullOrEmpty(RequestIdentifier);
 }
