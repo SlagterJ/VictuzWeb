@@ -1,6 +1,6 @@
 using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
-using VictuzWeb.Models;
+using VictuzWeb.ViewModels;
 
 namespace VictuzWeb.Controllers;
 
