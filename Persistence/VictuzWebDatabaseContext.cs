@@ -11,22 +11,22 @@ public class VictuzWebDatabaseContext : DbContext
     /// <summary>
     /// Gatherings set.
     /// </summary>
-    public DbSet<Gathering> Gatherings { get; set; }
+    public DbSet<Gathering> Gatherings { get; init; }
 
     /// <summary>
     /// Roles set.
     /// </summary>
-    public DbSet<Role> Roles { get; set; }
+    public DbSet<Role> Roles { get; init; }
 
     /// <summary>
     /// Suggestions set.
     /// </summary>
-    public DbSet<Suggestion> Suggestions { get; set; }
+    public DbSet<Suggestion> Suggestions { get; init; }
 
     /// <summary>
     /// Users set.
     /// </summary>
-    public DbSet<User> Users { get; set; }
+    public DbSet<User> Users { get; init; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {

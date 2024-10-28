@@ -13,11 +13,11 @@ public abstract class Entity
     /// </summary>
     [Key]
     [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-    public required ulong Identifier { get; set; }
+    public required ulong Identifier { get; init; }
 
     /// <summary>
     /// The date and time that this entity was created at.
     /// </summary>
     [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
-    public required DateTime CreatedAt { get; set; }
+    public required DateTime CreatedAt { get; init; }
 }
