@@ -30,7 +30,7 @@ public class VictuzWebDatabaseContext : DbContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
-        var connection =
+        const string connection =
             @"Data Source=.;Initial Catalog=VictuzWeb;Integrated Security=true;TrustServerCertificate=true;";
 
         optionsBuilder.UseSqlServer(connection);
