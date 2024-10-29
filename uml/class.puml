@@ -48,4 +48,11 @@ Suggestion <|-- Gathering
 
 User "0:n" -- "0:n" Gathering
 
+class Club {
+    + bool Accepted
+    + string Name
+    + User Owner
+}
+Entity <|-- Club
+
 @enduml
