@@ -33,6 +33,11 @@ public class User : Entity
     public required IEnumerable<Suggestion> Suggestions { get; init; }
 
     /// <summary>
+    /// The clubs that this user is the owner of.
+    /// </summary>
+    public required IEnumerable<Club> OwnerOf { get; init; }
+
+    /// <summary>
     /// The gatherings this user is registered for.
     /// </summary>
     public required IEnumerable<Gathering> RegisteredForGatherings { get; init; }

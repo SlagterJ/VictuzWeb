@@ -24,6 +24,11 @@ public class VictuzWebDatabaseContext : DbContext
     public DbSet<Suggestion> Suggestions { get; init; }
 
     /// <summary>
+    /// Clubs set.
+    /// </summary>
+    public DbSet<Club> Clubs { get; init; }
+
+    /// <summary>
     /// Users set.
     /// </summary>
     public DbSet<User> Users { get; init; }
