@@ -34,7 +34,7 @@ namespace VictuzWeb.Migrations
 
                     b.HasIndex("UsersIdentifier");
 
-                    b.ToTable("UserGathering");
+                    b.ToTable("UserGathering", (string)null);
                 });
 
             modelBuilder.Entity("VictuzWeb.Models.Club", b =>
@@ -63,7 +63,7 @@ namespace VictuzWeb.Migrations
 
                     b.HasIndex("OwnerIdentifier");
 
-                    b.ToTable("Clubs");
+                    b.ToTable("Clubs", (string)null);
                 });
 
             modelBuilder.Entity("VictuzWeb.Models.Role", b =>
@@ -84,7 +84,7 @@ namespace VictuzWeb.Migrations
 
                     b.HasKey("Identifier");
 
-                    b.ToTable("Roles");
+                    b.ToTable("Roles", (string)null);
                 });
 
             modelBuilder.Entity("VictuzWeb.Models.Suggestion", b =>
@@ -119,7 +119,7 @@ namespace VictuzWeb.Migrations
 
                     b.HasIndex("SuggestedByIdentifier");
 
-                    b.ToTable("Suggestions");
+                    b.ToTable("Suggestions", (string)null);
 
                     b.HasDiscriminator().HasValue("Suggestion");
 
@@ -156,7 +156,7 @@ namespace VictuzWeb.Migrations
 
                     b.HasIndex("RoleIdentifier");
 
-                    b.ToTable("Users");
+                    b.ToTable("Users", (string)null);
                 });
 
             modelBuilder.Entity("VictuzWeb.Models.Gathering", b =>
