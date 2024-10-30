@@ -84,13 +84,9 @@ public class ClubsController(VictuzWebDatabaseContext context) : Controller
         catch (DbUpdateConcurrencyException)
         {
             if (!ClubExists(club.Identifier))
-            {
                 return NotFound();
-            }
             else
-            {
                 throw;
-            }
         }
         return RedirectToAction(nameof(Index));
     }
