@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace VictuzWeb.AbstractModels;
+namespace VictuzWeb.Models;
 
 /// <summary>
 /// Global base entity for the application, use this to extend every other model.

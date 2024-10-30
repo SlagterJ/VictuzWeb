@@ -1,6 +1,4 @@
-﻿using VictuzWeb.AbstractModels;
-
-namespace VictuzWeb.Models;
+﻿namespace VictuzWeb.Models;
 
 /// <summary>
 /// A club.

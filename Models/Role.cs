@@ -1,6 +1,4 @@
-﻿using VictuzWeb.AbstractModels;
-
-namespace VictuzWeb.Models;
+﻿namespace VictuzWeb.Models;
 
 /// <summary>
 /// Role that represents the permissions a user should have.
