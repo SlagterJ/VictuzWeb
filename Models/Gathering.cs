@@ -9,25 +9,25 @@ public class Gathering : Suggestion
     /// <summary>
     /// The maximum amount of users that are allowed to attend this gathering.
     /// </summary>
-    public required int MaxUsers { get; init; }
+    public required int MaxUsers { get; set; }
 
     /// <summary>
     /// The users that have been registered for this gathering.
     /// </summary>
-    public required IEnumerable<User> RegisteredUsers { get; init; }
+    public required IEnumerable<User> RegisteredUsers { get; set; }
 
     /// <summary>
     /// The deadline to register for this gathering.
     /// </summary>
-    public required DateOnly DeadlineDate { get; init; }
+    public required DateOnly DeadlineDate { get; set; }
 
     /// <summary>
     /// The begin date and time of this gathering.
     /// </summary>
-    public required DateTime BeginDateTime { get; init; }
+    public required DateTime BeginDateTime { get; set; }
 
     /// <summary>
     /// The end date and time of this gathering.
     /// </summary>
-    public required DateTime EndDateTime { get; init; }
+    public required DateTime EndDateTime { get; set; }
 }

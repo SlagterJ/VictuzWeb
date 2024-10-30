@@ -10,10 +10,10 @@ public class Role : Entity
     /// <summary>
     /// The name of the role.
     /// </summary>
-    public required string Name { get; init; }
+    public required string Name { get; set; }
 
     /// <summary>
     /// The users that have this role.
     /// </summary>
-    public required IEnumerable<User> UsersWithRole { get; init; }
+    public required IEnumerable<User> UsersWithRole { get; set; }
 }

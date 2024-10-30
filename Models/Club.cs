@@ -10,15 +10,15 @@ public class Club : Entity
     /// <summary>
     /// Is this club accepted by an admin?
     /// </summary>
-    public required bool Accepted { get; init; }
+    public required bool Accepted { get; set; }
 
     /// <summary>
     /// The name of the club.
     /// </summary>
-    public required string Name { get; init; }
+    public required string Name { get; set; }
 
     /// <summary>
     /// The owner of this club.
     /// </summary>
-    public required User Owner { get; init; }
+    public required User Owner { get; set; }
 }
