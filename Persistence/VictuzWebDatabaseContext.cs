@@ -28,6 +28,13 @@ public class VictuzWebDatabaseContext : DbContext
     /// </summary>
     public DbSet<User> Users { get; init; }
 
+    /// <summary>
+    /// Users set.
+    /// </summary>
+    public DbSet<Club> Clubs { get; init; }
+
+
+
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
         const string connection =
@@ -79,5 +86,13 @@ public class VictuzWebDatabaseContext : DbContext
         //j => j.HasOne<Gathering>().WithMany().HasForeignKey("GatheringId"),
         //D => D.HasOne<User>().WithMany().HasForeignKey("UsersId")
         //);
+
+        modelBuilder.Entity<Club>().HasOne(c => c.Owner)
+            .WithMany()
+            .HasForeignKey("OwnerId");
+
+
     }
+
+public DbSet<VictuzWeb.Models.Club> Club { get; set; } = default!;
 }
