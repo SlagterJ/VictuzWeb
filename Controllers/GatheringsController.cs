@@ -144,7 +144,7 @@ namespace VictuzWeb.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        private bool GatheringExists(ulong? id)
+        private bool GatheringExists(ulong id)
         {
             return _context.Gatherings.Any(e => e.Identifier == id);
         }
