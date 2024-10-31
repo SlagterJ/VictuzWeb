@@ -13,34 +13,34 @@
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="Name" class="control-label">Naam</label>
-                <input asp-for="Name" class="form-control" />
-                <span asp-validation-for="Name" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Description" class="control-label">Beschijving</label>
-                <input asp-for="Description" class="form-control" />
-                <span asp-validation-for="Description" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="MaxUsers" class="control-label">Maximaal aantal deelnemers</label>
+                <label asp-for="MaxUsers" class="control-label"></label>
                 <input asp-for="MaxUsers" class="form-control" />
                 <span asp-validation-for="MaxUsers" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="DeadlineDate" class="control-label">Deadline inschrijving</label>
-                <input asp-for="DeadlineDate" class="form-control" type="date" />
+                <label asp-for="DeadlineDate" class="control-label"></label>
+                <input asp-for="DeadlineDate" class="form-control" />
                 <span asp-validation-for="DeadlineDate" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="BeginDateTime" class="control-label">Begintijd</label>
+                <label asp-for="BeginDateTime" class="control-label"></label>
                 <input asp-for="BeginDateTime" class="form-control" />
                 <span asp-validation-for="BeginDateTime" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="EndDateTime" class="control-label">Eindtijd</label>
+                <label asp-for="EndDateTime" class="control-label"></label>
                 <input asp-for="EndDateTime" class="form-control" />
                 <span asp-validation-for="EndDateTime" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Name" class="control-label"></label>
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Description" class="control-label"></label>
+                <input asp-for="Description" class="form-control" />
+                <span asp-validation-for="Description" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
