@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using VictuzWeb.Models;
 using VictuzWeb.Persistence;
@@ -36,9 +31,10 @@ public class ClubsController(VictuzWebDatabaseContext context) : Controller
     // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Create([Bind("Accepted,Name,Identifier,CreatedAt")] Club club)
+    public async Task<IActionResult> Create([Bind("Accepted,Name")] Club club)
     {
-        if (!ModelState.IsValid) return View(club);
+        if (!ModelState.IsValid)
+            return View(club);
 
         context.Add(club);
         await context.SaveChangesAsync();
@@ -63,10 +59,7 @@ public class ClubsController(VictuzWebDatabaseContext context) : Controller
     // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Edit(
-        ulong identifier,
-        [Bind("Accepted,Name,Identifier,CreatedAt")] Club club
-    )
+    public async Task<IActionResult> Edit(ulong identifier, [Bind("Accepted,Name")] Club club)
     {
         if (identifier != club.Identifier)
             return NotFound();
@@ -115,5 +108,6 @@ public class ClubsController(VictuzWebDatabaseContext context) : Controller
         return RedirectToAction(nameof(Index));
     }
 
-    private bool ClubExists(ulong identifier) => context.Clubs.Any(entity => entity.Identifier == identifier);
+    private bool ClubExists(ulong identifier) =>
+        context.Clubs.Any(entity => entity.Identifier == identifier);
 }
