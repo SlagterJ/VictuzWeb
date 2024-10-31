@@ -1,4 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using LanguageExt.Pipes;
+using Microsoft.AspNetCore.Http.HttpResults;
+using Microsoft.EntityFrameworkCore;
 using VictuzWeb.Models;
 
 namespace VictuzWeb.Persistence;
@@ -91,6 +93,28 @@ public class VictuzWebDatabaseContext : DbContext
             .WithMany()
             .HasForeignKey("OwnerId");
 
+
+
+        // data send
+        Role roleUser = new Role()
+        {
+            Identifier = 1,
+            Name = "User",
+            CreatedAt = DateTime.Now,
+
+        };
+        // data send
+        Role roleadmin = new Role()
+        {
+            Identifier = 2,
+            Name = "admin",
+            CreatedAt = DateTime.Now,
+
+        };
+
+
+        modelBuilder.Entity<Role>()
+            .HasData(roleUser, roleadmin);
 
     }
 

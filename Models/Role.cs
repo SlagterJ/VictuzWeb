@@ -15,5 +15,5 @@ public class Role : Entity
     /// <summary>
     /// The users that have this role.
     /// </summary>
-    public required IEnumerable<User> UsersWithRole { get; set; }
+    public IEnumerable<User>? UsersWithRole { get; set; }
 }
