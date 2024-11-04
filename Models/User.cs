@@ -20,6 +20,18 @@ public class User : Entity
     /// </summary>
     public required DateOnly BirthDate { get; set; }
 
+
+    /// <summary>
+    /// The username of the user, used for login.
+    /// </summary>
+    public required string Username { get; set; }
+
+    /// <summary>
+    /// The hashed password of the user.
+    /// </summary>
+    public required string PasswordHash { get; set; }
+
+
     /// <summary>
     /// Defines the role, and thus the permissions, of this user.
     /// </summary>
