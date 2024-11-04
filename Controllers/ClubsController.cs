@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -9,7 +10,9 @@ using VictuzWeb.Models;
 using VictuzWeb.Persistence;
 
 namespace VictuzWeb.Controllers;
-
+//[Authorize]
+//[Authorize(Roles = "Admin")]
+//[Authorize(Roles = "User")]
 public class ClubsController(VictuzWebDatabaseContext context) : Controller
 {
     // GET: Clubs

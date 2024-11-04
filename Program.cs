@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authentication.Cookies;
 using VictuzWeb.Persistence;
 
 namespace VictuzWeb;
@@ -11,6 +12,28 @@ public class Program
         // Add services to the container.
         builder.Services.AddControllersWithViews();
         builder.Services.AddDbContext<VictuzWebDatabaseContext>();
+
+
+
+
+        // Configure cookie authentication
+        builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+            .AddCookie(options =>
+            {
+                options.LoginPath = "/Account/Login"; // Redirect to login if not authenticated
+                options.LogoutPath = "/Account/Logout"; // Redirect to logout action
+
+
+                // Stel de tijdslimiet van de sessie in
+                options.ExpireTimeSpan = TimeSpan.FromMinutes(30); // Bijvoorbeeld 30 minuten geldig
+
+                // Sliding expiration verlengt de geldigheid als de gebruiker actief blijft
+                options.SlidingExpiration = true;
+
+            });
+
+
+
 
         var app = builder.Build();
 
