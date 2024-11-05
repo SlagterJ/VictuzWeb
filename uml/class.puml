@@ -5,7 +5,7 @@ title Class-diagram VictuzWeb
 
 
 abstract Entity {
-  + ulong Identifier
+  + uint Identifier
   + DateTime CreatedAt
 }
 
@@ -39,7 +39,7 @@ Entity <|-- Suggestion
 User "0:n" -- "0:n" Suggestion
 
 class Gathering {
-  + int MaxUsers
+  + uint MaxUsers
   + IEnumerable<User> RegisteredUsers
   + DateOnly DeadlineDate
   + DateTime BeginDateTime
