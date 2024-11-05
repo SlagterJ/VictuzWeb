@@ -1,4 +1,5 @@
 ﻿using System.Security.Claims;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using VictuzWeb.Models;
@@ -40,6 +41,7 @@ namespace VictuzWeb.Controllers
         }
 
         // GET: Gatherings/Create
+        [Authorize(Roles = "Admin")]
         public IActionResult Create()
         {
             return View();
