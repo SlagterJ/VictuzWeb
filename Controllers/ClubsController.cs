@@ -116,5 +116,5 @@ public class ClubsController(VictuzWebDatabaseContext context) : Controller
         return RedirectToAction(nameof(Index));
     }
 
-    private bool ClubExists(ulong id) => context.Clubs.Any(e => e.Identifier == id);
+    private bool ClubExists(ulong? id) => id == null || context.Clubs.Any(e => e.Identifier == id);
 }
