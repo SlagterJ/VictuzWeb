@@ -1,4 +1,5 @@
 @startuml usecase
+skinparam classAttributeIconSize 0
 left to right direction
 
 actor "Lid" as lid
