@@ -88,7 +88,6 @@ public class VictuzWebDatabaseContext : DbContext
         var userRole = new Role()
         {
             Identifier = 1,
-            CreatedAt = DateTime.Now,
             Name = "User",
             UsersWithRoleIdentifiers = [1],
         };
@@ -96,7 +95,6 @@ public class VictuzWebDatabaseContext : DbContext
         var adminRole = new Role()
         {
             Identifier = 2,
-            CreatedAt = DateTime.Now,
             Name = "Admin",
             UsersWithRoleIdentifiers = [2],
         };
@@ -104,7 +102,6 @@ public class VictuzWebDatabaseContext : DbContext
         var nickyUser = new User()
         {
             Identifier = 1,
-            CreatedAt = DateTime.Now,
             Firstname = "Nicky",
             Surname = "Jaspers",
             Username = "GigaChad",
@@ -119,7 +116,6 @@ public class VictuzWebDatabaseContext : DbContext
         var mielUser = new User()
         {
             Identifier = 2,
-            CreatedAt = DateTime.Now,
             Firstname = "Miel",
             Surname = "Noelanders",
             Username = "DirtyDaddy",
