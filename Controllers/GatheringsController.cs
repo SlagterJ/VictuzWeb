@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System.Security.Claims;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using VictuzWeb.Models;
 using VictuzWeb.Persistence;
@@ -51,6 +52,10 @@ namespace VictuzWeb.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("MaxUsers,DeadlineDate,BeginDateTime,EndDateTime,Name,Description,Identifier,CreatedAt")] Gathering gathering)
         {
+            var claimIdentifier  = User.FindFirst(ClaimTypes.NameIdentifier);
+            if (claimIdentifier == null) return View(gathering);
+            gathering.SuggestedByIdentifier = uint.Parse(claimIdentifier.Value);
+
             if (ModelState.IsValid)
             {
                 _context.Add(gathering);
