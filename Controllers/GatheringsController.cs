@@ -21,7 +21,7 @@ namespace VictuzWeb.Controllers
         }
 
         // GET: Gatherings/Details/5
-        public async Task<IActionResult> Details(ulong? id)
+        public async Task<IActionResult> Details(uint? id)
         {
             if (id == null)
             {
@@ -61,7 +61,7 @@ namespace VictuzWeb.Controllers
         }
 
         // GET: Gatherings/Edit/5
-        public async Task<IActionResult> Edit(ulong? id)
+        public async Task<IActionResult> Edit(uint? id)
         {
             if (id == null)
             {
@@ -81,7 +81,7 @@ namespace VictuzWeb.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(ulong id, [Bind("MaxUsers,DeadlineDate,BeginDateTime,EndDateTime,Name,Description,Identifier,CreatedAt")] Gathering gathering)
+        public async Task<IActionResult> Edit(uint id, [Bind("MaxUsers,DeadlineDate,BeginDateTime,EndDateTime,Name,Description,Identifier,CreatedAt")] Gathering gathering)
         {
             if (id != gathering.Identifier)
             {
@@ -112,7 +112,7 @@ namespace VictuzWeb.Controllers
         }
 
         // GET: Gatherings/Delete/5
-        public async Task<IActionResult> Delete(ulong? id)
+        public async Task<IActionResult> Delete(uint? id)
         {
             if (id == null)
             {
@@ -132,7 +132,7 @@ namespace VictuzWeb.Controllers
         // POST: Gatherings/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(ulong id)
+        public async Task<IActionResult> DeleteConfirmed(uint id)
         {
             var gathering = await _context.Gatherings.FindAsync(id);
             if (gathering != null)
@@ -144,7 +144,7 @@ namespace VictuzWeb.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        private bool GatheringExists(ulong id)
+        private bool GatheringExists(uint id)
         {
             return _context.Gatherings.Any(e => e.Identifier == id);
         }
