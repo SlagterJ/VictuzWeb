@@ -1,4 +1,6 @@
-﻿namespace VictuzWeb.Models;
+﻿using System.Collections;
+
+namespace VictuzWeb.Models;
 
 /// <summary>
 /// Class representing a user.
@@ -40,15 +42,30 @@ public class User : Entity
     /// <summary>
     /// Suggestions suggested by this user.
     /// </summary>
-    public required IEnumerable<Suggestion> Suggestions { get; set; }
+    public required IEnumerable<ulong> SuggestionsIdentifiers { get; set; }
+
+    /// <summary>
+    /// Suggestions suggested by this user.
+    /// </summary>
+    public IEnumerable<Suggestion>? Suggestions { get; set; }
 
     /// <summary>
     /// The clubs that this user is the owner of.
     /// </summary>
-    public required IEnumerable<Club> OwnerOf { get; set; }
+    public required IEnumerable<ulong> OwnerOfIdentifiers { get; set; }
+
+    /// <summary>
+    /// The clubs that this user is the owner of.
+    /// </summary>
+    public IEnumerable<Club>? OwnerOf { get; set; }
 
     /// <summary>
     /// The gatherings this user is registered for.
     /// </summary>
-    public required IEnumerable<Gathering> RegisteredForGatherings { get; set; }
+    public required IEnumerable<ulong> RegisteredForGatheringsIdentifiers { get; set; }
+
+    /// <summary>
+    /// The gatherings this user is registered for.
+    /// </summary>
+    public IEnumerable<Gathering>? RegisteredForGatherings { get; set; }
 }

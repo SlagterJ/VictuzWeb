@@ -14,7 +14,12 @@ public class Gathering : Suggestion
     /// <summary>
     /// The users that have been registered for this gathering.
     /// </summary>
-    public required IEnumerable<User> RegisteredUsers { get; set; }
+    public required IEnumerable<ulong> RegisteredUsersIdentifiers { get; set; }
+
+    /// <summary>
+    /// The users that have been registered for this gathering.
+    /// </summary>
+    public IEnumerable<User>? RegisteredUsers { get; set; }
 
     /// <summary>
     /// The deadline to register for this gathering.

@@ -18,7 +18,12 @@ public class Suggestion : Entity
     /// <summary>
     /// The user that suggested this suggestion.
     /// </summary>
-    public required User SuggestedBy { get; set; }
+    public required ulong SuggestedByIdentifier { get; set; }
+
+    /// <summary>
+    /// The user that suggested this suggestion.
+    /// </summary>
+    public User? SuggestedBy { get; set; }
 
     //TODO: ToGathering method
 }

@@ -37,15 +37,11 @@ public class ClubsController(VictuzWebDatabaseContext context) : Controller
     // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Create([Bind("Accepted,Name,Identifier,CreatedAt")] Club club)
+    public async Task<IActionResult> Create([Bind("Accepted,Name")] Club club)
     {
-        if (ModelState.IsValid)
-        {
-            context.Add(club);
-            await context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
-        }
-        return View(club);
+        context.Add(club);
+        await context.SaveChangesAsync();
+        return RedirectToAction(nameof(Index));
     }
 
     // GET: Clubs/Edit/5
@@ -66,6 +62,7 @@ public class ClubsController(VictuzWebDatabaseContext context) : Controller
     // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
     [HttpPost]
     [ValidateAntiForgeryToken]
+    [Authorize(Roles = "Admin")]
     public async Task<IActionResult> Edit(
         ulong id,
         [Bind("Accepted,Name,Identifier,CreatedAt")] Club club
@@ -93,6 +90,7 @@ public class ClubsController(VictuzWebDatabaseContext context) : Controller
     }
 
     // GET: Clubs/Delete/5
+    [Authorize(Roles = "Admin")]
     public async Task<IActionResult> Delete(ulong? id)
     {
         if (id == null)

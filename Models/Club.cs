@@ -18,5 +18,10 @@ public class Club : Entity
     /// <summary>
     /// The owner of this club.
     /// </summary>
-    public required User Owner { get; set; }
+    public required ulong OwnerIdentifier { get; set; }
+
+    /// <summary>
+    /// The owner of this club.
+    /// </summary>
+    public User? Owner { get; set; }
 }
