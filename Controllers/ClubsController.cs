@@ -17,7 +17,7 @@ public class ClubsController(VictuzWebDatabaseContext context) : Controller
     public async Task<IActionResult> Index() => View(await context.Clubs.ToListAsync());
 
     // GET: Clubs/Details/5
-    public async Task<IActionResult> Details(ulong? id)
+    public async Task<IActionResult> Details(uint ? id)
     {
         if (id == null)
             return NotFound();
