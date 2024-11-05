@@ -3,6 +3,8 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
+#pragma warning disable CA1814 // Prefer jagged arrays over multidimensional
+
 namespace VictuzWeb.Migrations
 {
     /// <inheritdoc />
@@ -15,10 +17,10 @@ namespace VictuzWeb.Migrations
                 name: "Roles",
                 columns: table => new
                 {
-                    Identifier = table.Column<decimal>(type: "decimal(20,0)", nullable: false)
+                    Identifier = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -29,13 +31,15 @@ namespace VictuzWeb.Migrations
                 name: "Users",
                 columns: table => new
                 {
-                    Identifier = table.Column<decimal>(type: "decimal(20,0)", nullable: false)
+                    Identifier = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Firstname = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Surname = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     BirthDate = table.Column<DateOnly>(type: "date", nullable: false),
-                    RoleIdentifier = table.Column<decimal>(type: "decimal(20,0)", nullable: false),
-                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    Username = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    PasswordHash = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    RoleIdentifier = table.Column<long>(type: "bigint", nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -49,20 +53,42 @@ namespace VictuzWeb.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Clubs",
+                columns: table => new
+                {
+                    Identifier = table.Column<long>(type: "bigint", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Accepted = table.Column<bool>(type: "bit", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    OwnerIdentifier = table.Column<long>(type: "bigint", nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Clubs", x => x.Identifier);
+                    table.ForeignKey(
+                        name: "FK_Clubs_Users_OwnerIdentifier",
+                        column: x => x.OwnerIdentifier,
+                        principalTable: "Users",
+                        principalColumn: "Identifier",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Suggestions",
                 columns: table => new
                 {
-                    Identifier = table.Column<decimal>(type: "decimal(20,0)", nullable: false)
+                    Identifier = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    SuggestedByIdentifier = table.Column<decimal>(type: "decimal(20,0)", nullable: false),
+                    SuggestedByIdentifier = table.Column<long>(type: "bigint", nullable: false),
                     Discriminator = table.Column<string>(type: "nvarchar(13)", maxLength: 13, nullable: false),
-                    MaxUsers = table.Column<int>(type: "int", nullable: true),
+                    MaxUsers = table.Column<long>(type: "bigint", nullable: true),
                     DeadlineDate = table.Column<DateOnly>(type: "date", nullable: true),
                     BeginDateTime = table.Column<DateTime>(type: "datetime2", nullable: true),
                     EndDateTime = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -79,8 +105,8 @@ namespace VictuzWeb.Migrations
                 name: "UserGathering",
                 columns: table => new
                 {
-                    GatheringIdentifier = table.Column<decimal>(type: "decimal(20,0)", nullable: false),
-                    UsersIdentifier = table.Column<decimal>(type: "decimal(20,0)", nullable: false)
+                    GatheringIdentifier = table.Column<long>(type: "bigint", nullable: false),
+                    UsersIdentifier = table.Column<long>(type: "bigint", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -98,6 +124,29 @@ namespace VictuzWeb.Migrations
                         principalColumn: "Identifier",
                         onDelete: ReferentialAction.Restrict);
                 });
+
+            migrationBuilder.InsertData(
+                table: "Roles",
+                columns: new[] { "Identifier", "Name" },
+                values: new object[,]
+                {
+                    { 1L, "User" },
+                    { 2L, "Admin" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Users",
+                columns: new[] { "Identifier", "BirthDate", "Firstname", "PasswordHash", "RoleIdentifier", "Surname", "Username" },
+                values: new object[,]
+                {
+                    { 1L, new DateOnly(2004, 11, 5), "Nicky", "password123", 1L, "Jaspers", "GigaChad" },
+                    { 2L, new DateOnly(2004, 11, 5), "Miel", "password123456", 2L, "Noelanders", "DirtyDaddy" }
+                });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Clubs_OwnerIdentifier",
+                table: "Clubs",
+                column: "OwnerIdentifier");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Suggestions_SuggestedByIdentifier",
@@ -118,6 +167,9 @@ namespace VictuzWeb.Migrations
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropTable(
+                name: "Clubs");
+
             migrationBuilder.DropTable(
                 name: "UserGathering");
 

@@ -48,7 +48,7 @@ namespace VictuzWeb.Migrations
                     b.Property<bool>("Accepted")
                         .HasColumnType("bit");
 
-                    b.Property<DateTime>("CreatedAt")
+                    b.Property<DateTime?>("CreatedAt")
                         .ValueGeneratedOnAddOrUpdate()
                         .HasColumnType("datetime2");
 
@@ -74,15 +74,11 @@ namespace VictuzWeb.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Identifier"));
 
-                    b.Property<DateTime>("CreatedAt")
+                    b.Property<DateTime?>("CreatedAt")
                         .ValueGeneratedOnAddOrUpdate()
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("UsersWithRoleIdentifiers")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -94,16 +90,12 @@ namespace VictuzWeb.Migrations
                         new
                         {
                             Identifier = 1L,
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Name = "User",
-                            UsersWithRoleIdentifiers = "[1]"
+                            Name = "User"
                         },
                         new
                         {
                             Identifier = 2L,
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Name = "Admin",
-                            UsersWithRoleIdentifiers = "[2]"
+                            Name = "Admin"
                         });
                 });
 
@@ -115,7 +107,7 @@ namespace VictuzWeb.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Identifier"));
 
-                    b.Property<DateTime>("CreatedAt")
+                    b.Property<DateTime?>("CreatedAt")
                         .ValueGeneratedOnAddOrUpdate()
                         .HasColumnType("datetime2");
 
@@ -157,7 +149,7 @@ namespace VictuzWeb.Migrations
                     b.Property<DateOnly>("BirthDate")
                         .HasColumnType("date");
 
-                    b.Property<DateTime>("CreatedAt")
+                    b.Property<DateTime?>("CreatedAt")
                         .ValueGeneratedOnAddOrUpdate()
                         .HasColumnType("datetime2");
 
@@ -165,24 +157,12 @@ namespace VictuzWeb.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("OwnerOfIdentifiers")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("PasswordHash")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("RegisteredForGatheringsIdentifiers")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<long>("RoleIdentifier")
                         .HasColumnType("bigint");
-
-                    b.Property<string>("SuggestionsIdentifiers")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Surname")
                         .IsRequired()
@@ -203,13 +183,9 @@ namespace VictuzWeb.Migrations
                         {
                             Identifier = 1L,
                             BirthDate = new DateOnly(2004, 11, 5),
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Firstname = "Nicky",
-                            OwnerOfIdentifiers = "[]",
                             PasswordHash = "password123",
-                            RegisteredForGatheringsIdentifiers = "[]",
                             RoleIdentifier = 1L,
-                            SuggestionsIdentifiers = "[]",
                             Surname = "Jaspers",
                             Username = "GigaChad"
                         },
@@ -217,13 +193,9 @@ namespace VictuzWeb.Migrations
                         {
                             Identifier = 2L,
                             BirthDate = new DateOnly(2004, 11, 5),
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Firstname = "Miel",
-                            OwnerOfIdentifiers = "[]",
                             PasswordHash = "password123456",
-                            RegisteredForGatheringsIdentifiers = "[]",
                             RoleIdentifier = 2L,
-                            SuggestionsIdentifiers = "[]",
                             Surname = "Noelanders",
                             Username = "DirtyDaddy"
                         });
@@ -244,10 +216,6 @@ namespace VictuzWeb.Migrations
 
                     b.Property<long>("MaxUsers")
                         .HasColumnType("bigint");
-
-                    b.Property<string>("RegisteredUsersIdentifiers")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
 
                     b.HasDiscriminator().HasValue("Gathering");
                 });

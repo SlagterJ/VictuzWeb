@@ -46,27 +46,12 @@ public class User : Entity
     /// <summary>
     /// Suggestions suggested by this user.
     /// </summary>
-    public required IEnumerable<uint> SuggestionsIdentifiers { get; set; }
-
-    /// <summary>
-    /// Suggestions suggested by this user.
-    /// </summary>
     public IEnumerable<Suggestion>? Suggestions { get; set; }
 
     /// <summary>
     /// The clubs that this user is the owner of.
     /// </summary>
-    public required IEnumerable<uint> OwnerOfIdentifiers { get; set; }
-
-    /// <summary>
-    /// The clubs that this user is the owner of.
-    /// </summary>
     public IEnumerable<Club>? OwnerOf { get; set; }
-
-    /// <summary>
-    /// The gatherings this user is registered for.
-    /// </summary>
-    public required IEnumerable<uint> RegisteredForGatheringsIdentifiers { get; set; }
 
     /// <summary>
     /// The gatherings this user is registered for.

@@ -19,5 +19,5 @@ public abstract class Entity
     /// The date and time that this entity was created at.
     /// </summary>
     [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
-    public DateTime CreatedAt { get; set; }
+    public DateTime? CreatedAt { get; set; }
 }

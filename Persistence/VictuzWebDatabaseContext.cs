@@ -89,14 +89,12 @@ public class VictuzWebDatabaseContext : DbContext
         {
             Identifier = 1,
             Name = "User",
-            UsersWithRoleIdentifiers = [1],
         };
 
         var adminRole = new Role()
         {
             Identifier = 2,
             Name = "Admin",
-            UsersWithRoleIdentifiers = [2],
         };
 
         var nickyUser = new User()
@@ -108,9 +106,6 @@ public class VictuzWebDatabaseContext : DbContext
             BirthDate = DateOnly.FromDateTime(DateTime.Now.AddYears(-20)),
             PasswordHash = "password123",
             RoleIdentifier = 1,
-            SuggestionsIdentifiers = [],
-            OwnerOfIdentifiers = [],
-            RegisteredForGatheringsIdentifiers = [],
         };
 
         var mielUser = new User()
@@ -122,9 +117,6 @@ public class VictuzWebDatabaseContext : DbContext
             BirthDate = DateOnly.FromDateTime(DateTime.Now.AddYears(-20)),
             PasswordHash = "password123456",
             RoleIdentifier = 2,
-            SuggestionsIdentifiers = [],
-            OwnerOfIdentifiers = [],
-            RegisteredForGatheringsIdentifiers = [],
         };
 
         modelBuilder.Entity<Role>().HasData(userRole);

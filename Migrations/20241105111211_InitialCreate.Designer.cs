@@ -12,8 +12,8 @@ using VictuzWeb.Persistence;
 namespace VictuzWeb.Migrations
 {
     [DbContext(typeof(VictuzWebDatabaseContext))]
-    [Migration("20241105094733_AddDefaultUsers")]
-    partial class AddDefaultUsers
+    [Migration("20241105111211_InitialCreate")]
+    partial class InitialCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -27,11 +27,11 @@ namespace VictuzWeb.Migrations
 
             modelBuilder.Entity("UserGathering", b =>
                 {
-                    b.Property<decimal>("GatheringIdentifier")
-                        .HasColumnType("decimal(20,0)");
+                    b.Property<long>("GatheringIdentifier")
+                        .HasColumnType("bigint");
 
-                    b.Property<decimal>("UsersIdentifier")
-                        .HasColumnType("decimal(20,0)");
+                    b.Property<long>("UsersIdentifier")
+                        .HasColumnType("bigint");
 
                     b.HasKey("GatheringIdentifier", "UsersIdentifier");
 
@@ -42,11 +42,11 @@ namespace VictuzWeb.Migrations
 
             modelBuilder.Entity("VictuzWeb.Models.Club", b =>
                 {
-                    b.Property<decimal>("Identifier")
+                    b.Property<long>("Identifier")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("decimal(20,0)");
+                        .HasColumnType("bigint");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<decimal>("Identifier"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Identifier"));
 
                     b.Property<bool>("Accepted")
                         .HasColumnType("bit");
@@ -59,8 +59,8 @@ namespace VictuzWeb.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<decimal>("OwnerIdentifier")
-                        .HasColumnType("decimal(20,0)");
+                    b.Property<long>("OwnerIdentifier")
+                        .HasColumnType("bigint");
 
                     b.HasKey("Identifier");
 
@@ -71,21 +71,17 @@ namespace VictuzWeb.Migrations
 
             modelBuilder.Entity("VictuzWeb.Models.Role", b =>
                 {
-                    b.Property<decimal>("Identifier")
+                    b.Property<long>("Identifier")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("decimal(20,0)");
+                        .HasColumnType("bigint");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<decimal>("Identifier"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Identifier"));
 
                     b.Property<DateTime?>("CreatedAt")
                         .ValueGeneratedOnAddOrUpdate()
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("UsersWithRoleIdentifiers")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -96,27 +92,23 @@ namespace VictuzWeb.Migrations
                     b.HasData(
                         new
                         {
-                            Identifier = 1m,
-                            CreatedAt = new DateTime(2024, 11, 5, 10, 47, 32, 349, DateTimeKind.Local).AddTicks(2468),
-                            Name = "User",
-                            UsersWithRoleIdentifiers = "[1]"
+                            Identifier = 1L,
+                            Name = "User"
                         },
                         new
                         {
-                            Identifier = 2m,
-                            CreatedAt = new DateTime(2024, 11, 5, 10, 47, 32, 349, DateTimeKind.Local).AddTicks(2515),
-                            Name = "Admin",
-                            UsersWithRoleIdentifiers = "[2]"
+                            Identifier = 2L,
+                            Name = "Admin"
                         });
                 });
 
             modelBuilder.Entity("VictuzWeb.Models.Suggestion", b =>
                 {
-                    b.Property<decimal>("Identifier")
+                    b.Property<long>("Identifier")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("decimal(20,0)");
+                        .HasColumnType("bigint");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<decimal>("Identifier"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Identifier"));
 
                     b.Property<DateTime?>("CreatedAt")
                         .ValueGeneratedOnAddOrUpdate()
@@ -135,8 +127,8 @@ namespace VictuzWeb.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<decimal>("SuggestedByIdentifier")
-                        .HasColumnType("decimal(20,0)");
+                    b.Property<long>("SuggestedByIdentifier")
+                        .HasColumnType("bigint");
 
                     b.HasKey("Identifier");
 
@@ -151,11 +143,11 @@ namespace VictuzWeb.Migrations
 
             modelBuilder.Entity("VictuzWeb.Models.User", b =>
                 {
-                    b.Property<decimal>("Identifier")
+                    b.Property<long>("Identifier")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("decimal(20,0)");
+                        .HasColumnType("bigint");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<decimal>("Identifier"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Identifier"));
 
                     b.Property<DateOnly>("BirthDate")
                         .HasColumnType("date");
@@ -168,24 +160,12 @@ namespace VictuzWeb.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("OwnerOfIdentifiers")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("PasswordHash")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("RegisteredForGatheringsIdentifiers")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<decimal>("RoleIdentifier")
-                        .HasColumnType("decimal(20,0)");
-
-                    b.Property<string>("SuggestionsIdentifiers")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<long>("RoleIdentifier")
+                        .HasColumnType("bigint");
 
                     b.Property<string>("Surname")
                         .IsRequired()
@@ -204,29 +184,21 @@ namespace VictuzWeb.Migrations
                     b.HasData(
                         new
                         {
-                            Identifier = 1m,
+                            Identifier = 1L,
                             BirthDate = new DateOnly(2004, 11, 5),
-                            CreatedAt = new DateTime(2024, 11, 5, 10, 47, 32, 349, DateTimeKind.Local).AddTicks(2519),
                             Firstname = "Nicky",
-                            OwnerOfIdentifiers = "[]",
                             PasswordHash = "password123",
-                            RegisteredForGatheringsIdentifiers = "[]",
-                            RoleIdentifier = 1m,
-                            SuggestionsIdentifiers = "[]",
+                            RoleIdentifier = 1L,
                             Surname = "Jaspers",
                             Username = "GigaChad"
                         },
                         new
                         {
-                            Identifier = 2m,
+                            Identifier = 2L,
                             BirthDate = new DateOnly(2004, 11, 5),
-                            CreatedAt = new DateTime(2024, 11, 5, 10, 47, 32, 349, DateTimeKind.Local).AddTicks(2535),
                             Firstname = "Miel",
-                            OwnerOfIdentifiers = "[]",
                             PasswordHash = "password123456",
-                            RegisteredForGatheringsIdentifiers = "[]",
-                            RoleIdentifier = 2m,
-                            SuggestionsIdentifiers = "[]",
+                            RoleIdentifier = 2L,
                             Surname = "Noelanders",
                             Username = "DirtyDaddy"
                         });
@@ -245,12 +217,8 @@ namespace VictuzWeb.Migrations
                     b.Property<DateTime>("EndDateTime")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("MaxUsers")
-                        .HasColumnType("int");
-
-                    b.Property<string>("RegisteredUsersIdentifiers")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<long>("MaxUsers")
+                        .HasColumnType("bigint");
 
                     b.HasDiscriminator().HasValue("Gathering");
                 });
