@@ -84,5 +84,56 @@ public class VictuzWebDatabaseContext : DbContext
         //j => j.HasOne<Gathering>().WithMany().HasForeignKey("GatheringId"),
         //D => D.HasOne<User>().WithMany().HasForeignKey("UsersId")
         //);
+
+        var userRole = new Role()
+        {
+            Identifier = 1,
+            CreatedAt = DateTime.Now,
+            Name = "User",
+            UsersWithRoleIdentifiers = [1],
+        };
+
+        var adminRole = new Role()
+        {
+            Identifier = 2,
+            CreatedAt = DateTime.Now,
+            Name = "Admin",
+            UsersWithRoleIdentifiers = [2],
+        };
+
+        var nickyUser = new User()
+        {
+            Identifier = 1,
+            CreatedAt = DateTime.Now,
+            Firstname = "Nicky",
+            Surname = "Jaspers",
+            Username = "GigaChad",
+            BirthDate = DateOnly.FromDateTime(DateTime.Now.AddYears(-20)),
+            PasswordHash = "password123",
+            RoleIdentifier = 1,
+            SuggestionsIdentifiers = [],
+            OwnerOfIdentifiers = [],
+            RegisteredForGatheringsIdentifiers = [],
+        };
+
+        var mielUser = new User()
+        {
+            Identifier = 2,
+            CreatedAt = DateTime.Now,
+            Firstname = "Miel",
+            Surname = "Noelanders",
+            Username = "DirtyDaddy",
+            BirthDate = DateOnly.FromDateTime(DateTime.Now.AddYears(-20)),
+            PasswordHash = "password123456",
+            RoleIdentifier = 2,
+            SuggestionsIdentifiers = [],
+            OwnerOfIdentifiers = [],
+            RegisteredForGatheringsIdentifiers = [],
+        };
+
+        modelBuilder.Entity<Role>().HasData(userRole);
+        modelBuilder.Entity<Role>().HasData(adminRole);
+        modelBuilder.Entity<User>().HasData(nickyUser);
+        modelBuilder.Entity<User>().HasData(mielUser);
     }
 }

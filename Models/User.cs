@@ -33,11 +33,15 @@ public class User : Entity
     /// </summary>
     public required string PasswordHash { get; set; }
 
+    /// <summary>
+    /// Defines the role, and thus the permissions, of this user.
+    /// </summary>
+    public required ulong RoleIdentifier { get; set; }
 
     /// <summary>
     /// Defines the role, and thus the permissions, of this user.
     /// </summary>
-    public required Role Role { get; set; }
+    public Role? Role { get; set; }
 
     /// <summary>
     /// Suggestions suggested by this user.

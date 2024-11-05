@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using VictuzWeb.Persistence;
 
@@ -11,9 +12,11 @@ using VictuzWeb.Persistence;
 namespace VictuzWeb.Migrations
 {
     [DbContext(typeof(VictuzWebDatabaseContext))]
-    partial class VictuzWebDatabaseContextModelSnapshot : ModelSnapshot
+    [Migration("20241105093936_AlsoAddRoleIdentifier")]
+    partial class AlsoAddRoleIdentifier
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -89,22 +92,6 @@ namespace VictuzWeb.Migrations
                     b.HasKey("Identifier");
 
                     b.ToTable("Roles");
-
-                    b.HasData(
-                        new
-                        {
-                            Identifier = 1m,
-                            CreatedAt = new DateTime(2024, 11, 5, 10, 47, 32, 349, DateTimeKind.Local).AddTicks(2468),
-                            Name = "User",
-                            UsersWithRoleIdentifiers = "[1]"
-                        },
-                        new
-                        {
-                            Identifier = 2m,
-                            CreatedAt = new DateTime(2024, 11, 5, 10, 47, 32, 349, DateTimeKind.Local).AddTicks(2515),
-                            Name = "Admin",
-                            UsersWithRoleIdentifiers = "[2]"
-                        });
                 });
 
             modelBuilder.Entity("VictuzWeb.Models.Suggestion", b =>
@@ -197,36 +184,6 @@ namespace VictuzWeb.Migrations
                     b.HasIndex("RoleIdentifier");
 
                     b.ToTable("Users");
-
-                    b.HasData(
-                        new
-                        {
-                            Identifier = 1m,
-                            BirthDate = new DateOnly(2004, 11, 5),
-                            CreatedAt = new DateTime(2024, 11, 5, 10, 47, 32, 349, DateTimeKind.Local).AddTicks(2519),
-                            Firstname = "Nicky",
-                            OwnerOfIdentifiers = "[]",
-                            PasswordHash = "password123",
-                            RegisteredForGatheringsIdentifiers = "[]",
-                            RoleIdentifier = 1m,
-                            SuggestionsIdentifiers = "[]",
-                            Surname = "Jaspers",
-                            Username = "GigaChad"
-                        },
-                        new
-                        {
-                            Identifier = 2m,
-                            BirthDate = new DateOnly(2004, 11, 5),
-                            CreatedAt = new DateTime(2024, 11, 5, 10, 47, 32, 349, DateTimeKind.Local).AddTicks(2535),
-                            Firstname = "Miel",
-                            OwnerOfIdentifiers = "[]",
-                            PasswordHash = "password123456",
-                            RegisteredForGatheringsIdentifiers = "[]",
-                            RoleIdentifier = 2m,
-                            SuggestionsIdentifiers = "[]",
-                            Surname = "Noelanders",
-                            Username = "DirtyDaddy"
-                        });
                 });
 
             modelBuilder.Entity("VictuzWeb.Models.Gathering", b =>
