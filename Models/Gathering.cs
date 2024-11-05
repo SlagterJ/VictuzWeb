@@ -9,12 +9,12 @@ public class Gathering : Suggestion
     /// <summary>
     /// The maximum amount of users that are allowed to attend this gathering.
     /// </summary>
-    public required int MaxUsers { get; set; }
+    public required uint MaxUsers { get; set; }
 
     /// <summary>
     /// The users that have been registered for this gathering.
     /// </summary>
-    public required IEnumerable<ulong> RegisteredUsersIdentifiers { get; set; }
+    public required IEnumerable<uint> RegisteredUsersIdentifiers { get; set; }
 
     /// <summary>
     /// The users that have been registered for this gathering.

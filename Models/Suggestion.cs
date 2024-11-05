@@ -18,7 +18,7 @@ public class Suggestion : Entity
     /// <summary>
     /// The user that suggested this suggestion.
     /// </summary>
-    public required ulong SuggestedByIdentifier { get; set; }
+    public required uint SuggestedByIdentifier { get; set; }
 
     /// <summary>
     /// The user that suggested this suggestion.

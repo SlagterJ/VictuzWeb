@@ -45,7 +45,7 @@ public class ClubsController(VictuzWebDatabaseContext context) : Controller
     }
 
     // GET: Clubs/Edit/5
-    public async Task<IActionResult> Edit(ulong? id)
+    public async Task<IActionResult> Edit(uint? id)
     {
         if (id == null)
             return NotFound();
@@ -64,7 +64,7 @@ public class ClubsController(VictuzWebDatabaseContext context) : Controller
     [ValidateAntiForgeryToken]
     [Authorize(Roles = "Admin")]
     public async Task<IActionResult> Edit(
-        ulong id,
+        uint id,
         [Bind("Accepted,Name,Identifier,CreatedAt")] Club club
     )
     {
@@ -91,7 +91,7 @@ public class ClubsController(VictuzWebDatabaseContext context) : Controller
 
     // GET: Clubs/Delete/5
     [Authorize(Roles = "Admin")]
-    public async Task<IActionResult> Delete(ulong? id)
+    public async Task<IActionResult> Delete(uint? id)
     {
         if (id == null)
             return NotFound();
@@ -106,7 +106,7 @@ public class ClubsController(VictuzWebDatabaseContext context) : Controller
     // POST: Clubs/Delete/5
     [HttpPost, ActionName("Delete")]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> DeleteConfirmed(ulong id)
+    public async Task<IActionResult> DeleteConfirmed(uint id)
     {
         var club = await context.Clubs.FindAsync(id);
         if (club != null)
@@ -116,5 +116,5 @@ public class ClubsController(VictuzWebDatabaseContext context) : Controller
         return RedirectToAction(nameof(Index));
     }
 
-    private bool ClubExists(ulong? id) => id == null || context.Clubs.Any(e => e.Identifier == id);
+    private bool ClubExists(uint? id) => id == null || context.Clubs.Any(e => e.Identifier == id);
 }

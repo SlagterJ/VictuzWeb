@@ -36,7 +36,7 @@ public class User : Entity
     /// <summary>
     /// Defines the role, and thus the permissions, of this user.
     /// </summary>
-    public required ulong RoleIdentifier { get; set; }
+    public required uint RoleIdentifier { get; set; }
 
     /// <summary>
     /// Defines the role, and thus the permissions, of this user.
@@ -46,7 +46,7 @@ public class User : Entity
     /// <summary>
     /// Suggestions suggested by this user.
     /// </summary>
-    public required IEnumerable<ulong> SuggestionsIdentifiers { get; set; }
+    public required IEnumerable<uint> SuggestionsIdentifiers { get; set; }
 
     /// <summary>
     /// Suggestions suggested by this user.
@@ -56,7 +56,7 @@ public class User : Entity
     /// <summary>
     /// The clubs that this user is the owner of.
     /// </summary>
-    public required IEnumerable<ulong> OwnerOfIdentifiers { get; set; }
+    public required IEnumerable<uint> OwnerOfIdentifiers { get; set; }
 
     /// <summary>
     /// The clubs that this user is the owner of.
@@ -66,7 +66,7 @@ public class User : Entity
     /// <summary>
     /// The gatherings this user is registered for.
     /// </summary>
-    public required IEnumerable<ulong> RegisteredForGatheringsIdentifiers { get; set; }
+    public required IEnumerable<uint> RegisteredForGatheringsIdentifiers { get; set; }
 
     /// <summary>
     /// The gatherings this user is registered for.
