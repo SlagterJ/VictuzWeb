@@ -176,7 +176,95 @@ namespace VictuzWeb.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        private bool SuggestionExists(ulong? id)
+
+        public async Task<IActionResult> SuggesToGatherings(ulong? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var suggestion = await _context.Suggestions
+            .Include(s => s.SuggestedBy) // Include de SuggestedBy (User)
+            .FirstOrDefaultAsync(s => s.Identifier == id); // Zoek de Suggestion op basis van het id
+
+            if (suggestion == null)
+            {
+                // Als de Suggestion niet wordt gevonden, stuur een foutmelding of redirect naar een andere actie
+                return NotFound();
+            }
+
+            // Zet de Suggestion om naar een Gathering object
+            var gathering = new Gathering
+            {
+                Identifier = suggestion.Identifier,
+                Name = suggestion.Name,
+                Description = suggestion.Description,
+                SuggestedByIdentifier = suggestion.SuggestedByIdentifier,
+                SuggestedBy = suggestion.SuggestedBy,  // Verbind de SuggestedBy met de User
+                MaxUsers = 100,  // Voorbeeldwaarde
+                DeadlineDate = DateOnly.FromDateTime(DateTime.Now.AddMonths(1)),  // Voorbeeldwaarde
+                BeginDateTime = DateTime.Now.AddDays(1),  // Voorbeeldwaarde
+                EndDateTime = DateTime.Now.AddDays(1).AddHours(3)  // Voorbeeldwaarde
+            };
+
+            if (gathering == null)
+            {
+                return NotFound();
+            }
+
+
+            return View(gathering);
+
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> SuggesToGatherings(uint Identifier, [Bind("MaxUsers,DeadlineDate,BeginDateTime,EndDateTime,Name,Description,Identifier,CreatedAt,SuggestedByIdentifier")] Gathering gathering)
+        {
+            if (Identifier != gathering.Identifier)
+            {
+                return NotFound();
+            }
+
+            
+            if (ModelState.IsValid)
+            {
+                try
+                {
+
+
+
+                    // Optionally, update the properties directly if you need to change anything
+                    _context.Update(gathering);
+
+                    // Save the changes to the database
+                    await _context.SaveChangesAsync();
+
+
+
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!SuggestionExists(gathering.Identifier))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
+                return RedirectToAction(nameof(Index));
+            }
+            return View(gathering);
+
+
+            return View(nameof(Index));
+        }
+
+
+            private bool SuggestionExists(ulong? id)
         {
             return _context.Suggestions.Any(e => e.Identifier == id);
         }
