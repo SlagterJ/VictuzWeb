@@ -235,13 +235,38 @@ namespace VictuzWeb.Controllers
 
 
 
-                    // Optionally, update the properties directly if you need to change anything
-                    _context.Update(gathering);
+                    // Zoek de bestaande Suggestion op
+                    var suggestion = await _context.Suggestions.FirstOrDefaultAsync(s => s.Identifier == gathering.Identifier);
 
-                    // Save the changes to the database
+                    if (suggestion == null)
+                    {
+                        return NotFound();
+                    }
+
+                    // Verwijder de Suggestion uit de context
+                    _context.Suggestions.Remove(suggestion);
+
+                    // Maak een nieuwe Gathering op basis van de Suggestion
+                    var newGathering = new Gathering
+                    {
+                        Identifier = suggestion.Identifier,
+                        Name = gathering.Name,
+                        Description = gathering.Description,
+                        SuggestedByIdentifier = suggestion.SuggestedByIdentifier,
+                        MaxUsers = gathering.MaxUsers,
+                        DeadlineDate = gathering.DeadlineDate,
+                        BeginDateTime = gathering.BeginDateTime,
+                        EndDateTime = gathering.EndDateTime,
+                    };
+
+                    // Voeg de nieuwe Gathering toe aan de context
+                    _context.Gatherings.Add(newGathering);
+
+                    // Sla de wijzigingen op in de database
                     await _context.SaveChangesAsync();
 
-
+                    // Redirect naar de Index nadat de nieuwe Gathering is opgeslagen
+                    return RedirectToAction(nameof(Index));
 
                 }
                 catch (DbUpdateConcurrencyException)
