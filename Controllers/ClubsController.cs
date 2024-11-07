@@ -3,10 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using LanguageExt;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using NuGet.Configuration;
 using VictuzWeb.Models;
 using VictuzWeb.Persistence;
 
@@ -72,25 +74,50 @@ public class ClubsController(VictuzWebDatabaseContext context) : Controller
         [Bind("Accepted,Name,Identifier,CreatedAt")] Club club
     )
     {
-        if (id != club.Identifier)
+
+
+        if (club.Identifier == null)
+        {
             return NotFound();
-
-        if (!ModelState.IsValid)
-            return View(club);
-
-        try
-        {
-            context.Update(club);
-            await context.SaveChangesAsync();
         }
-        catch (DbUpdateConcurrencyException)
+
+        var new_Club = await context.Clubs
+            .Include(c => c.Owner)
+            .FirstOrDefaultAsync(m => m.Identifier == club.Identifier);
+
+
+        if (new_Club == null)
         {
-            if (!ClubExists(club.Identifier))
-                return NotFound();
-            else
-                throw;
+            return NotFound();
         }
-        return RedirectToAction(nameof(Index));
+
+
+        new_Club.Accepted = club.Accepted;
+        new_Club.Name = club.Name;
+
+        ModelState.Remove("Owner");
+
+        if (ModelState.IsValid)
+        {
+            try
+            {
+                context.Update(new_Club);
+                await context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!ClubExists(club.Identifier))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+            return RedirectToAction(nameof(Index));
+        }
+        return View(club);
     }
 
     // GET: Clubs/Delete/5

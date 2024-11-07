@@ -28,6 +28,25 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Gatherings" asp-action="Index">Bijeenkomsten</a>
                         </li>
+
+
+                        @if (User.Identity.IsAuthenticated)
+                        {
+
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Clubs" asp-action="Index">Bijeenkomsten</a>
+                            </li>
+
+
+                            @if (User.IsInRole("Admin"))
+                            {
+                                       
+                            }
+                            if (User.IsInRole("User"))
+                            {
+                                
+                            }
+                        }
                     </ul>
 
                     <ul class="navbar-nav ms-auto">
