@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -17,7 +18,7 @@ public class ClubsController(VictuzWebDatabaseContext context) : Controller
     public async Task<IActionResult> Index() => View(await context.Clubs.ToListAsync());
 
     // GET: Clubs/Details/5
-    public async Task<IActionResult> Details(ulong? id)
+    public async Task<IActionResult> Details(uint ? id)
     {
         if (id == null)
             return NotFound();
@@ -39,6 +40,9 @@ public class ClubsController(VictuzWebDatabaseContext context) : Controller
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> Create([Bind("Accepted,Name")] Club club)
     {
+        var claimIdentifier = User.FindFirst(ClaimTypes.NameIdentifier);
+        if (claimIdentifier == null) return View(club);
+        club.OwnerIdentifier = uint.Parse(claimIdentifier.Value);
         context.Add(club);
         await context.SaveChangesAsync();
         return RedirectToAction(nameof(Index));
