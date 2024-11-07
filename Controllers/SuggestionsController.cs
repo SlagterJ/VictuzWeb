@@ -26,10 +26,6 @@ namespace VictuzWeb.Controllers
         // GET: Suggestions
         public async Task<IActionResult> Index()
         {
-            if(User.IsInRole("user"))
-            {
-                return View("UserIndex", await _context.Suggestions.ToListAsync());
-            }
             
             return View(await _context.Suggestions.ToListAsync());
         }
@@ -47,12 +43,6 @@ namespace VictuzWeb.Controllers
             if (suggestion == null)
             {
                 return NotFound();
-            }
-
-
-            if (User.IsInRole("user"))
-            {
-                return View("UserDetails", suggestion);
             }
 
             return View(suggestion);
@@ -96,7 +86,7 @@ namespace VictuzWeb.Controllers
                 return NotFound();
             }
 
-            var suggestion = await _context.Suggestions.FindAsync(id);
+            var suggestion = await _context.Suggestions.FirstOrDefaultAsync(m => m.Identifier == id);
             if (suggestion == null)
             {
                 return NotFound();
@@ -109,9 +99,9 @@ namespace VictuzWeb.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(ulong id, [Bind("Name,Description,Identifier,CreatedAt")] Suggestion suggestion)
+        public async Task<IActionResult> Edit(ulong Identifier, [Bind("Name,Description,Identifier,CreatedAt")] Suggestion suggestion)
         {
-            if (id != suggestion.Identifier)
+            if (Identifier != suggestion.Identifier)
             {
                 return NotFound();
             }

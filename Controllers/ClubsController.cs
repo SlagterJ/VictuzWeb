@@ -70,13 +70,13 @@ public class ClubsController(VictuzWebDatabaseContext context) : Controller
     [ValidateAntiForgeryToken]
     [Authorize(Roles = "Admin")]
     public async Task<IActionResult> Edit(
-        uint id,
+        uint Identifier,
         [Bind("Accepted,Name,Identifier,CreatedAt")] Club club
     )
     {
 
 
-        if (club.Identifier == null)
+        if (club.Identifier != Identifier)
         {
             return NotFound();
         }
