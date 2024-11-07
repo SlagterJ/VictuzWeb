@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -39,6 +40,9 @@ public class ClubsController(VictuzWebDatabaseContext context) : Controller
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> Create([Bind("Accepted,Name")] Club club)
     {
+        var claimIdentifier = User.FindFirst(ClaimTypes.NameIdentifier);
+        if (claimIdentifier == null) return View(club);
+        club.OwnerIdentifier = uint.Parse(claimIdentifier.Value);
         context.Add(club);
         await context.SaveChangesAsync();
         return RedirectToAction(nameof(Index));
