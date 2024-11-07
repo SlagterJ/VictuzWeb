@@ -26,8 +26,14 @@ namespace VictuzWeb.Controllers
         // GET: Suggestions
         public async Task<IActionResult> Index()
         {
-            
-            return View(await _context.Suggestions.ToListAsync());
+
+            if (User.IsInRole("User"))
+            {
+
+                return View(nameof(Create));
+
+            }
+            return View(await _context.Suggestions.Where(a => a.GetType() == typeof(Suggestion)).ToListAsync());
         }
 
         // GET: Suggestions/Details/5
@@ -68,9 +74,11 @@ namespace VictuzWeb.Controllers
 
                 suggestion.SuggestedByIdentifier = Convert.ToUInt32(userId);
 
+                TempData["SuccessMessage"] = "Bedankt voor uw inzending!";
+
                 _context.Add(suggestion);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(Create));
             }
 
             return View(suggestion);
@@ -106,16 +114,22 @@ namespace VictuzWeb.Controllers
                 return NotFound();
             }
 
+            var Suggestions = await _context.Suggestions.FirstOrDefaultAsync(m => m.Identifier == Identifier);
+
+            Suggestions.Name = suggestion.Name;
+            Suggestions.Description = suggestion.Description;
+
+
             if (ModelState.IsValid)
             {
                 try
                 {
-                    _context.Update(suggestion);
+                    _context.Update(Suggestions);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!SuggestionExists(suggestion.Identifier))
+                    if (!SuggestionExists(Suggestions.Identifier))
                     {
                         return NotFound();
                     }
@@ -150,9 +164,9 @@ namespace VictuzWeb.Controllers
         // POST: Suggestions/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(ulong id)
+        public async Task<IActionResult> DeleteConfirmed(ulong Identifier)
         {
-            var suggestion = await _context.Suggestions.FindAsync(id);
+            var suggestion = await _context.Suggestions.FirstOrDefaultAsync(m => m.Identifier == Identifier);
             if (suggestion != null)
             {
                 _context.Suggestions.Remove(suggestion);
