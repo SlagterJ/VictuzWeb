@@ -85,17 +85,9 @@ public class VictuzWebDatabaseContext : DbContext
         //D => D.HasOne<User>().WithMany().HasForeignKey("UsersId")
         //);
 
-        var userRole = new Role()
-        {
-            Identifier = 1,
-            Name = "User",
-        };
+        var userRole = new Role() { Identifier = 1, Name = "User" };
 
-        var adminRole = new Role()
-        {
-            Identifier = 2,
-            Name = "Admin",
-        };
+        var adminRole = new Role() { Identifier = 2, Name = "Admin" };
 
         var nickyUser = new User()
         {
@@ -113,7 +105,7 @@ public class VictuzWebDatabaseContext : DbContext
             Identifier = 2,
             Firstname = "Miel",
             Surname = "Noelanders",
-            Username = "DirtyDaddy",
+            Username = "MielTheKing",
             BirthDate = DateOnly.FromDateTime(DateTime.Now.AddYears(-20)),
             PasswordHash = "password123456",
             RoleIdentifier = 2,
@@ -124,11 +116,10 @@ public class VictuzWebDatabaseContext : DbContext
         modelBuilder.Entity<User>().HasData(nickyUser);
         modelBuilder.Entity<User>().HasData(mielUser);
 
-        modelBuilder.Entity<Suggestion>()
-        .HasDiscriminator<string>("Discriminator")
-        .HasValue<Suggestion>("Suggestion")
-        .HasValue<Gathering>("Gathering");
-
-
+        modelBuilder
+            .Entity<Suggestion>()
+            .HasDiscriminator<string>("Discriminator")
+            .HasValue<Suggestion>("Suggestion")
+            .HasValue<Gathering>("Gathering");
     }
 }

@@ -20,15 +20,15 @@ namespace VictuzWeb.Controllers
         // GET: Gatherings
         public async Task<IActionResult> Index()
         {
-
-
-            var Gatherings = await _context.Gatherings
-                .Include(a => a.RegisteredUsers)
+            var Gatherings = await _context
+                .Gatherings.Include(a => a.RegisteredUsers)
                 .Select(j => new GatheringsViewModel
                 {
-                    Identifier =  j.Identifier,
+                    Identifier = j.Identifier,
 
                     Name = j.Name,
+
+                    Image = j.Image,
 
                     Description = j.Description,
 
@@ -36,17 +36,13 @@ namespace VictuzWeb.Controllers
 
                     MaxUsers = j.MaxUsers,
 
-                   DeadlineDate = j.DeadlineDate,
+                    DeadlineDate = j.DeadlineDate,
 
-                   BeginDateTime = j.BeginDateTime,
+                    BeginDateTime = j.BeginDateTime,
 
-                   EndDateTime = j.EndDateTime,
-                 })
+                    EndDateTime = j.EndDateTime,
+                })
                 .ToListAsync();
-
-
-           
-
 
             return View(Gatherings);
         }
@@ -59,8 +55,7 @@ namespace VictuzWeb.Controllers
                 return NotFound();
             }
 
-            var gathering = await _context.Gatherings
-                .FirstOrDefaultAsync(m => m.Identifier == id);
+            var gathering = await _context.Gatherings.FirstOrDefaultAsync(m => m.Identifier == id);
             if (gathering == null)
             {
                 return NotFound();
@@ -72,24 +67,32 @@ namespace VictuzWeb.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize]
-        public async Task<IActionResult> Join([Bind("Name", "Description", "Identifier")] Gathering gathering)
+        public async Task<IActionResult> Join(
+            [Bind("Name", "Description", "Identifier")] Gathering gathering
+        )
         {
             // Gets the existing gathering from the database.
-            var existingGathering = await _context.Gatherings
-                .Include(g => g.RegisteredUsers)
+            var existingGathering = await _context
+                .Gatherings.Include(g => g.RegisteredUsers)
                 .FirstOrDefaultAsync(g => g.Identifier == gathering.Identifier);
-            if (existingGathering == null) return NotFound();
+            if (existingGathering == null)
+                return NotFound();
 
             //Gets the current user from database.
-            var claimIdentifier  = User.FindFirst(ClaimTypes.NameIdentifier);
-            if (claimIdentifier == null) return View("Details");
+            var claimIdentifier = User.FindFirst(ClaimTypes.NameIdentifier);
+            if (claimIdentifier == null)
+                return View("Details");
             var userIdentifier = uint.Parse(claimIdentifier.Value);
-            var currentUser = await _context.Users.FirstOrDefaultAsync(u => u.Identifier == userIdentifier);
-            if (currentUser == null) return NotFound();
+            var currentUser = await _context.Users.FirstOrDefaultAsync(u =>
+                u.Identifier == userIdentifier
+            );
+            if (currentUser == null)
+                return NotFound();
 
             //adds the current user to the list of registered users.
             var registeredUsersList = new List<User>();
-            if (existingGathering.RegisteredUsers != null) registeredUsersList = existingGathering.RegisteredUsers.ToList();
+            if (existingGathering.RegisteredUsers != null)
+                registeredUsersList = existingGathering.RegisteredUsers.ToList();
             registeredUsersList.Add(currentUser);
             existingGathering.RegisteredUsers = registeredUsersList;
 
@@ -130,10 +133,16 @@ namespace VictuzWeb.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("MaxUsers,DeadlineDate,BeginDateTime,EndDateTime,Name,Description,Identifier,CreatedAt")] Gathering gathering)
+        public async Task<IActionResult> Create(
+            [Bind(
+                "MaxUsers,DeadlineDate,BeginDateTime,EndDateTime,Name,Description,Identifier,CreatedAt"
+            )]
+                Gathering gathering
+        )
         {
-            var claimIdentifier  = User.FindFirst(ClaimTypes.NameIdentifier);
-            if (claimIdentifier == null) return View(gathering);
+            var claimIdentifier = User.FindFirst(ClaimTypes.NameIdentifier);
+            if (claimIdentifier == null)
+                return View(gathering);
             gathering.SuggestedByIdentifier = uint.Parse(claimIdentifier.Value);
 
             if (ModelState.IsValid)
@@ -166,7 +175,13 @@ namespace VictuzWeb.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(uint Identifier, [Bind("MaxUsers,DeadlineDate,BeginDateTime,EndDateTime,Name,Description,Identifier,SuggestedByIdentifier,CreatedAt")] Gathering gathering)
+        public async Task<IActionResult> Edit(
+            uint Identifier,
+            [Bind(
+                "MaxUsers,DeadlineDate,BeginDateTime,EndDateTime,Name,Description,Identifier,SuggestedByIdentifier,CreatedAt"
+            )]
+                Gathering gathering
+        )
         {
             if (Identifier != gathering.Identifier)
             {
@@ -204,8 +219,7 @@ namespace VictuzWeb.Controllers
                 return NotFound();
             }
 
-            var gathering = await _context.Gatherings
-                .FirstOrDefaultAsync(m => m.Identifier == id);
+            var gathering = await _context.Gatherings.FirstOrDefaultAsync(m => m.Identifier == id);
             if (gathering == null)
             {
                 return NotFound();
