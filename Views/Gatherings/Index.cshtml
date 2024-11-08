@@ -6,9 +6,20 @@
 
 <h1>Index</h1>
 
-<p>
-    <a asp-action="Create">Nieuwe maken</a>
-</p>
+
+
+@if (User.Identity.IsAuthenticated)
+{
+    @if (User.IsInRole("Admin"))
+    {
+        <p>
+            <a asp-action="Create">Nieuwe maken</a>
+        </p>
+    }
+}
+
+
+
 <table class="table">
     <thead>
     <tr>
@@ -55,9 +66,20 @@
             @Html.DisplayFor(modelItem => item.EndDateTime)
         </td>
         <td>
-            <a asp-action="Edit" asp-route-id="@item.Identifier">Edit</a> |
-            <a asp-action="Details" asp-route-id="@item.Identifier">Details</a> |
-            <a asp-action="Delete" asp-route-id="@item.Identifier">Delete</a>
+
+                    <a asp-action="Details" asp-route-id="@item.Identifier">Details</a>
+
+            @if (User.Identity.IsAuthenticated)
+            {
+                @if (User.IsInRole("Admin"))
+                {
+                            <a asp-action="Edit" asp-route-id="@item.Identifier">Edit</a>
+                            <a asp-action="Delete" asp-route-id="@item.Identifier">Delete</a>
+                }
+
+
+
+            }            
         </td>
     </tr>
 }
