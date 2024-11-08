@@ -65,7 +65,7 @@ namespace VictuzWeb.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Name,Description,Identifier,CreatedAt")] Suggestion suggestion)
+        public async Task<IActionResult> Create([Bind("Name,Description,Identifier,CreatedAt")] Suggestion suggestion, IFormFile Image)
         {
             if (ModelState.IsValid)
             {
@@ -75,6 +75,27 @@ namespace VictuzWeb.Controllers
                 suggestion.SuggestedByIdentifier = Convert.ToUInt32(userId);
 
                 TempData["SuccessMessage"] = "Bedankt voor uw inzending!";
+
+
+                var uploadsFolder = Path.Combine("wwwroot/img");
+                var fileExtension = Path.GetExtension(Image.FileName);
+                var uniqueFileName = $"{"suggestion"}_{suggestion.SuggestedByIdentifier}_{DateTime.Now:yyyyMMdd_HHmmss}{fileExtension}";
+
+                var filePath = Path.Combine(uploadsFolder, uniqueFileName);
+
+
+                suggestion.Image = uniqueFileName;
+                ModelState.Remove("Image");
+
+
+                // Save the file to the server
+                using (var fileStream = new FileStream(filePath, FileMode.Create))
+                {
+                    await Image.CopyToAsync(fileStream);
+                }
+
+
+
 
                 _context.Add(suggestion);
                 await _context.SaveChangesAsync();
@@ -249,6 +270,7 @@ namespace VictuzWeb.Controllers
                     // Maak een nieuwe Gathering op basis van de Suggestion
                     var newGathering = new Gathering
                     {
+                        Image = gathering.Image,
                         Identifier = suggestion.Identifier,
                         Name = gathering.Name,
                         Description = gathering.Description,

@@ -47,11 +47,33 @@ public class ClubsController(VictuzWebDatabaseContext context) : Controller
     // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Create([Bind("Accepted,Name")] Club club)
+    public async Task<IActionResult> Create([Bind("Accepted,Name")] Club club , IFormFile Image)
     {
+
         var claimIdentifier = User.FindFirst(ClaimTypes.NameIdentifier);
         if (claimIdentifier == null) return View(club);
         club.OwnerIdentifier = uint.Parse(claimIdentifier.Value);
+
+
+        var uploadsFolder = Path.Combine("wwwroot/img");
+        var fileExtension = Path.GetExtension(Image.FileName);
+        var uniqueFileName = $"{"CLUB"}_{club.OwnerIdentifier}_{DateTime.Now:yyyyMMdd_HHmmss}{fileExtension}";
+
+        var filePath = Path.Combine(uploadsFolder, uniqueFileName);
+
+
+        club.Image = uniqueFileName;
+        ModelState.Remove("Image");
+
+
+        // Save the file to the server
+        using (var fileStream = new FileStream(filePath, FileMode.Create))
+        {
+            await Image.CopyToAsync(fileStream);
+        }
+
+
+
         context.Add(club);
         await context.SaveChangesAsync();
         return RedirectToAction(nameof(Index));

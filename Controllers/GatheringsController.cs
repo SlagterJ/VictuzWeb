@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using VictuzWeb.Models;
 using VictuzWeb.Persistence;
+using VictuzWeb.ViewModels;
 
 namespace VictuzWeb.Controllers
 {
@@ -19,7 +20,35 @@ namespace VictuzWeb.Controllers
         // GET: Gatherings
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Gatherings.ToListAsync());
+
+
+            var Gatherings = await _context.Gatherings
+                .Include(a => a.RegisteredUsers)
+                .Select(j => new GatheringsViewModel
+                {
+                    Identifier =  j.Identifier,
+
+                    Name = j.Name,
+
+                    Description = j.Description,
+
+                    IngescrevenUsers = j.RegisteredUsers.Count(),
+
+                    MaxUsers = j.MaxUsers,
+
+                   DeadlineDate = j.DeadlineDate,
+
+                   BeginDateTime = j.BeginDateTime,
+
+                   EndDateTime = j.EndDateTime,
+                 })
+                .ToListAsync();
+
+
+           
+
+
+            return View(Gatherings);
         }
 
         // GET: Gatherings/Details/5

@@ -1,4 +1,4 @@
-﻿@model IEnumerable<VictuzWeb.Models.Gathering>
+﻿@model IEnumerable<VictuzWeb.ViewModels.GatheringsViewModel>
 
 @{
     ViewData["Title"] = "Index";
@@ -54,6 +54,8 @@
             @Html.DisplayFor(modelItem => item.Description)
         </td>
         <td>
+            @Html.DisplayFor(modelItem => item.IngescrevenUsers)
+            /
             @Html.DisplayFor(modelItem => item.MaxUsers)
         </td>
         <td>

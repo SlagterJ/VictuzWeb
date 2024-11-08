@@ -25,5 +25,8 @@ public class Suggestion : Entity
     /// </summary>
     public User? SuggestedBy { get; set; }
 
+
+    public string? Image { get; set; }
+
     //TODO: ToGathering method
 }

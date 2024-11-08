@@ -22,4 +22,8 @@
     <PackageReference Include="Portable.BouncyCastle" Version="1.9.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="wwwroot\Img\" />
+  </ItemGroup>
+
 </Project>

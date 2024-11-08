@@ -20,6 +20,9 @@ public class Club : Entity
     /// </summary>
     public required uint OwnerIdentifier { get; set; }
 
+
+    public string? Image { get; set; }
+
     /// <summary>
     /// The owner of this club.
     /// </summary>
