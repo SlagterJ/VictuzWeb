@@ -1,4 +1,5 @@
 ﻿using System.Security.Claims;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using VictuzWeb.Models;
@@ -41,6 +42,7 @@ namespace VictuzWeb.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize]
         public async Task<IActionResult> Join([Bind("Name", "Description", "Identifier")] Gathering gathering)
         {
             // Gets the existing gathering from the database.
