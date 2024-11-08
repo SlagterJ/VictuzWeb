@@ -123,5 +123,12 @@ public class VictuzWebDatabaseContext : DbContext
         modelBuilder.Entity<Role>().HasData(adminRole);
         modelBuilder.Entity<User>().HasData(nickyUser);
         modelBuilder.Entity<User>().HasData(mielUser);
+
+        modelBuilder.Entity<Suggestion>()
+        .HasDiscriminator<string>("Discriminator")
+        .HasValue<Suggestion>("Suggestion")
+        .HasValue<Gathering>("Gathering");
+
+
     }
 }

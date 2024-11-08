@@ -39,11 +39,13 @@
                                 <a class="nav-link text-dark" asp-area="" asp-controller="suggestions" asp-action="Index">Suggesties</a>
                             </li>
 
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Clubs" asp-action="Index">Clubs</a>
+                            </li>
+
                             @if (User.IsInRole("Admin"))
                             {
-                                <li class="nav-item">
-                                    <a class="nav-link text-dark" asp-area="" asp-controller="Clubs" asp-action="Index">Clubs</a>
-                                </li>
+
                             }
                             if (User.IsInRole("User"))
                             {

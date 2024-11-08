@@ -13,11 +13,18 @@ using VictuzWeb.Models;
 using VictuzWeb.Persistence;
 
 namespace VictuzWeb.Controllers;
-[Authorize(Roles = "Admin")]
+[Authorize]
 public class ClubsController(VictuzWebDatabaseContext context) : Controller
 {
     // GET: Clubs
-    public async Task<IActionResult> Index() => View(await context.Clubs.ToListAsync());
+    public async Task<IActionResult> Index()
+    {
+        if (User.IsInRole("User"))
+        {
+            return View(await context.Clubs.Where(a => a.Accepted == true).ToListAsync());
+        }
+        return View(await context.Clubs.ToListAsync());
+    }
 
     // GET: Clubs/Details/5
     public async Task<IActionResult> Details(uint ? id)

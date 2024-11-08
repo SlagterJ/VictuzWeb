@@ -88,9 +88,9 @@ namespace VictuzWeb.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(uint id, [Bind("MaxUsers,DeadlineDate,BeginDateTime,EndDateTime,Name,Description,Identifier,CreatedAt")] Gathering gathering)
+        public async Task<IActionResult> Edit(uint Identifier, [Bind("MaxUsers,DeadlineDate,BeginDateTime,EndDateTime,Name,Description,Identifier,SuggestedByIdentifier,CreatedAt")] Gathering gathering)
         {
-            if (id != gathering.Identifier)
+            if (Identifier != gathering.Identifier)
             {
                 return NotFound();
             }

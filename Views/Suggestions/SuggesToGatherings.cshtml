@@ -1,0 +1,62 @@
+﻿@model VictuzWeb.Models.Gathering
+
+@{
+    ViewData["Title"] = "Bijeenkomst aanmaken";
+}
+
+<h1>Bijeenkomst aanmaken</h1>
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="SuggesToGatherings">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Identifier" />
+            <input type="hidden" asp-for="SuggestedByIdentifier" />
+            
+            <div class="form-group">
+                <label asp-for="Name" class="control-label">Naam</label>
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Description" class="control-label">Beschijving</label>
+                <input asp-for="Description" class="form-control" />
+                <span asp-validation-for="Description" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="MaxUsers" class="control-label">Maximaal aantal gebruikers</label>
+                <input asp-for="MaxUsers" class="form-control" />
+                <span asp-validation-for="MaxUsers" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DeadlineDate" class="control-label">Deadline inschrijvingen</label>
+                <input asp-for="DeadlineDate" class="form-control" type="date"/>
+                <span asp-validation-for="DeadlineDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="BeginDateTime" class="control-label">Begintijd</label>
+                <input asp-for="BeginDateTime" class="form-control" />
+                <span asp-validation-for="BeginDateTime" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="EndDateTime" class="control-label">Eindtijd</label>
+                <input asp-for="EndDateTime" class="form-control" />
+                <span asp-validation-for="EndDateTime" class="text-danger"></span>
+            </div>
+
+
+            <div class="form-group">
+                <input type="submit" value="Aanmaken" class="btn btn-primary" style="margin-top:5px" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Terug naar lijst</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
