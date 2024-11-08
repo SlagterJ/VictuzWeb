@@ -54,6 +54,16 @@
         </dd>
     </dl>
 </div>
+
+<form asp-action="Join">
+    <div class="form-group">
+        <input type="hidden" asp-for="Identifier" />
+        <input type="hidden" asp-for="Name" />
+        <input type="hidden" asp-for="Description" />
+        <input type="submit" value="Aanmelden" class="btn btn-primary" style="margin-top:5px"/>
+    </div>
+</form>
+
 <div>
     <a asp-action="Edit" asp-route-id="@Model?.Identifier">Edit</a> |
     <a asp-action="Index">Back to List</a>
