@@ -8,6 +8,9 @@ using VictuzWeb.ViewModels;
 using VictuzWeb.Persistence;
 using Org.BouncyCastle.Crypto.Generators;
 using Microsoft.EntityFrameworkCore;
+using VictuzWeb.Models;
+using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Templates.Blazor;
+using LanguageExt;
 
 public class AccountController : Controller
 {
@@ -58,5 +61,26 @@ public class AccountController : Controller
     {
         await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
         return RedirectToAction("Index", "Home");
+    }
+
+
+    public async Task<IActionResult> Register()
+    {
+        return View();
+    }
+
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> Register([Bind("Firstname,Surname,BirthDate,Username,PasswordHash")] User User)
+    {
+        var role = await _context.Roles.FirstAsync(x => x.Identifier == 1);
+        User.Role = role;
+        if (ModelState.IsValid)
+        {
+            _context.Add(User);
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Login));
+        }
+        return View(nameof(Register));
     }
 }
