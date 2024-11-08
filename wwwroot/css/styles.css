@@ -3,10 +3,19 @@
 }
 
 .navbar {
-    background-color: #07808F !important;
+    background-color: #146472 !important;
     padding: 15px !important;
 }
 
 .navbar * {
     color: white !important;
+}
+
+.container {
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+footer {
+    padding: 0 15px !important;
 }
