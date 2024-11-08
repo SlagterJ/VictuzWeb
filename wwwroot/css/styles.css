@@ -1,0 +1,12 @@
+﻿body {
+    background-color: whitesmoke;
+}
+
+.navbar {
+    background-color: #07808F !important;
+    padding: 15px !important;
+}
+
+.navbar * {
+    color: white !important;
+}
