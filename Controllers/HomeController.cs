@@ -17,13 +17,6 @@ public class HomeController(ILogger<HomeController> logger) : Controller
     public IActionResult Index() => View();
 
     /// <summary>
-    /// Privacy view call.
-    /// </summary>
-    /// <returns>Privacy view.</returns>
-
-    public IActionResult Privacy() => View();
-
-    /// <summary>
     /// Error view call.
     /// </summary>
     /// <returns>Error view.</returns>
