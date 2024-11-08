@@ -241,7 +241,7 @@ namespace VictuzWeb.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> SuggesToGatherings(uint Identifier, [Bind("MaxUsers,DeadlineDate,BeginDateTime,EndDateTime,Name,Description,Identifier,CreatedAt,SuggestedByIdentifier")] Gathering gathering)
+        public async Task<IActionResult> SuggesToGatherings(uint Identifier, [Bind("MaxUsers,DeadlineDate,BeginDateTime,EndDateTime,Name,Description,Identifier,CreatedAt,SuggestedByIdentifier,Image")] Gathering gathering)
         {
             if (Identifier != gathering.Identifier)
             {
@@ -258,6 +258,9 @@ namespace VictuzWeb.Controllers
 
                     // Zoek de bestaande Suggestion op
                     var suggestion = await _context.Suggestions.FirstOrDefaultAsync(s => s.Identifier == gathering.Identifier);
+
+
+                    gathering.Image = suggestion.Image;
 
                     if (suggestion == null)
                     {
