@@ -39,6 +39,54 @@ namespace VictuzWeb.Controllers
             return View(gathering);
         }
 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Join([Bind("Name", "Description", "Identifier")] Gathering gathering)
+        {
+            // Gets the existing gathering from the database.
+            var existingGathering = await _context.Gatherings
+                .Include(g => g.RegisteredUsers)
+                .FirstOrDefaultAsync(g => g.Identifier == gathering.Identifier);
+            if (existingGathering == null) return NotFound();
+
+            //Gets the current user from database.
+            var claimIdentifier  = User.FindFirst(ClaimTypes.NameIdentifier);
+            if (claimIdentifier == null) return View("Details");
+            var userIdentifier = uint.Parse(claimIdentifier.Value);
+            var currentUser = await _context.Users.FirstOrDefaultAsync(u => u.Identifier == userIdentifier);
+            if (currentUser == null) return NotFound();
+
+            //adds the current user to the list of registered users.
+            var registeredUsersList = new List<User>();
+            if (existingGathering.RegisteredUsers != null) registeredUsersList = existingGathering.RegisteredUsers.ToList();
+            registeredUsersList.Add(currentUser);
+            existingGathering.RegisteredUsers = registeredUsersList;
+
+            //Update the database.
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    _context.Update(existingGathering);
+                    await _context.SaveChangesAsync();
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!GatheringExists(gathering.Identifier))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
+
+                return RedirectToAction(nameof(Index));
+            }
+            return View("Details");
+        }
+
         // GET: Gatherings/Create
         public IActionResult Create()
         {
