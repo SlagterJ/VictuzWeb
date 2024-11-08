@@ -55,6 +55,47 @@
     </dl>
 </div>
 
+@if (User.Identity.IsAuthenticated)
+{
+    @if (User.IsInRole("Admin"))
+    {
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>
+                        Firstname
+                    </th>
+                    <th>
+                        Surname
+                    </th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.RegisteredUsers)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Firstname)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Surname)
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+}
+
+
+
+
+
+
+
+
+
 <form asp-action="Join">
     <div class="form-group">
         <input type="hidden" asp-for="Identifier" />

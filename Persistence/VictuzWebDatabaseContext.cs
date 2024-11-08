@@ -76,6 +76,25 @@ public class VictuzWebDatabaseContext : DbContext
             .WithMany(user => user.Suggestions)
             .OnDelete(DeleteBehavior.Restrict); // Prevent cascade delete
 
+        modelBuilder
+            .Entity<Suggestion>()
+            .HasMany(like => like.Likes)
+            .WithMany(user => user.Likes)
+            .UsingEntity<Dictionary<string, object>>(
+                "SuggestionLike", // Join table name
+                j => j
+                    .HasOne<User>()
+                    .WithMany()
+                    .HasForeignKey("UserId")
+                    .OnDelete(DeleteBehavior.Restrict), // Restrict deletes for Likes
+                j => j
+                    .HasOne<Suggestion>()
+                    .WithMany()
+                    .HasForeignKey("SuggestionId")
+                    .OnDelete(DeleteBehavior.Restrict) // Restrict deletes for Suggestions
+            );
+
+
         modelBuilder.Entity<User>();
         //.HasMany(a => a.RegisteredForGatherings)
         //.WithMany(a => a.RegisteredUsers)

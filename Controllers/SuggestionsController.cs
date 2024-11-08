@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using LanguageExt;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -10,6 +11,7 @@ using Microsoft.EntityFrameworkCore;
 using NuGet.Configuration;
 using VictuzWeb.Models;
 using VictuzWeb.Persistence;
+using VictuzWeb.ViewModels;
 
 namespace VictuzWeb.Controllers
 {
@@ -27,13 +29,33 @@ namespace VictuzWeb.Controllers
         public async Task<IActionResult> Index()
         {
 
-            if (User.IsInRole("User"))
-            {
+            var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
+            int userId = Convert.ToInt32(userIdClaim.Value);
 
-                return View(nameof(Create));
 
-            }
-            return View(await _context.Suggestions.Where(a => a.GetType() == typeof(Suggestion)).ToListAsync());
+            var Suggestions = await _context.Suggestions
+                .Where(a => a.GetType() == typeof(Suggestion))
+                .Include(a => a.Likes)
+                .OrderBy(s => s.Likes.Count()) // Sort by the count of likes (ascending)
+                .Select(j => new SuggestionViewModel
+                {
+                    Identifier = j.Identifier,
+
+                    Name = j.Name,
+
+                    Image = j.Image,
+
+                    Description = j.Description,
+
+                    likeCount = j.Likes.Count(),
+
+                    Haslike = j.Likes.Any(a => a.Identifier == userId)
+                })
+                .ToListAsync();
+
+
+
+            return View(Suggestions);
         }
 
         // GET: Suggestions/Details/5
@@ -44,8 +66,16 @@ namespace VictuzWeb.Controllers
                 return NotFound();
             }
 
+
+            var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
+            string userId = userIdClaim.Value; // Dit is de UserId
+            
+
+
             var suggestion = await _context.Suggestions
+                .Include(a => a.Likes.Where(a => a.Identifier == Convert.ToInt32(userId)))
                 .FirstOrDefaultAsync(m => m.Identifier == id);
+
             if (suggestion == null)
             {
                 return NotFound();
@@ -313,8 +343,76 @@ namespace VictuzWeb.Controllers
             return View(nameof(Index));
         }
 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> like(uint Identifier)
+        {
+            if (Identifier != 0) {
+                var Suggestions =  await _context.Suggestions.FirstOrDefaultAsync(s => s.Identifier == Identifier);
 
-            private bool SuggestionExists(ulong? id)
+                var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
+                string userId = userIdClaim.Value; // Dit is de UserId
+                List<User> users = Suggestions.Likes.ToList();
+
+                users.Add(await _context.Users.FirstOrDefaultAsync(s => s.Identifier == Convert.ToInt32(userId)));
+                Suggestions.Likes = users;
+
+
+                try
+                {
+                    _context.Update(Suggestions);
+                    await _context.SaveChangesAsync();
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!SuggestionExists(Suggestions.Identifier))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
+            }
+            return View(nameof(Index));
+        }
+
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> RemoveLike(uint Identifier)
+        {
+
+            var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
+            string userId = userIdClaim.Value; // Dit is de UserId
+
+            var Suggestions = await _context.Suggestions
+            .Include(c => c.Likes.Where(a => a.Identifier == Convert.ToInt32(userId))) // Load related CollectorItems
+            .FirstOrDefaultAsync(c => c.Identifier == Identifier);
+
+            if (Suggestions != null)
+            {
+
+                foreach (var user in Suggestions.Likes.ToList())
+                {
+                    Suggestions.Likes.Remove(user); // Remove the reference to this Collection
+                }
+
+
+            }
+
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Details));
+
+
+
+            return View(nameof(Index));
+        }
+
+
+
+        private bool SuggestionExists(ulong? id)
         {
             return _context.Suggestions.Any(e => e.Identifier == id);
         }

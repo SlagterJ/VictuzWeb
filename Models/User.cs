@@ -57,4 +57,8 @@ public class User : Entity
     /// The gatherings this user is registered for.
     /// </summary>
     public IEnumerable<Gathering>? RegisteredForGatherings { get; set; }
+
+    public IEnumerable<Suggestion>? Likes { get; set; }
+
+
 }

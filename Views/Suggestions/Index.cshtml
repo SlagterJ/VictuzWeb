@@ -1,4 +1,4 @@
-﻿@model IEnumerable<VictuzWeb.Models.Suggestion>
+﻿@model IEnumerable<VictuzWeb.ViewModels.SuggestionViewModel>
 
 @{
     ViewData["Title"] = "Index";
@@ -19,14 +19,27 @@
                 @Html.DisplayNameFor(model => model.Description)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.CreatedAt)
+                @Html.DisplayNameFor(model => model.Image)
             </th>
+
+            <th>
+                @Html.DisplayNameFor(model => model.likeCount)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Haslike)
+            </th>
+
+            <th>
+                like count
+            </th>
+
+
             <th></th>
         </tr>
     </thead>
     <tbody>
 @foreach (var item in Model) {
-        <tr>
+        <tr class="@(item.likeCount >= 3 ? "yellow-background" : "")">
             <td>
                 @Html.DisplayFor(modelItem => item.Name)
             </td>
@@ -34,7 +47,13 @@
                 @Html.DisplayFor(modelItem => item.Description)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.CreatedAt)
+                @Html.DisplayFor(modelItem => item.Image)
+            </td>
+            <td>
+                    @Html.DisplayFor(modelItem => item.likeCount)
+            </td>
+            <td>
+                    @Html.DisplayFor(modelItem => item.Haslike)
             </td>
             <td>
 
@@ -57,3 +76,9 @@
 }
     </tbody>
 </table>
+
+<style>
+    .yellow-background {
+        background-color: yellow;
+    }
+</style>

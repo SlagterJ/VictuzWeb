@@ -35,4 +35,33 @@
     <a asp-action="SuggesToGatherings" asp-route-id="@Model.Identifier">maak Gatherings</a>|
     <a asp-action="Edit" asp-route-id="@Model?.Identifier">Edit</a>|
     <a asp-action="Index">Back to List</a>
+
+
+    
+
+
+        @if(Model.Likes.Count() == 0)
+        {
+            <form asp-action="like">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <input type="hidden" asp-for="Identifier" />
+                <div class="form-group">
+                    <input type="submit" value="Like" class="btn btn-primary" style="margin-top:5px" />
+                </div>
+            </form>
+        }
+        @if (Model.Likes.Count() != 0)
+        {
+        <form asp-action="RemoveLike">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Identifier" />
+            <div class="form-group">
+                <input type="submit" value="remove Like" class="btn btn-primary" style="margin-top:5px" />
+            </div>
+        </form>
+        }
+
+
+
+
 </div>

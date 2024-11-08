@@ -1,5 +1,6 @@
 using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
+using VictuzWeb.Persistence;
 using VictuzWeb.ViewModels;
 
 namespace VictuzWeb.Controllers;
@@ -8,8 +9,22 @@ namespace VictuzWeb.Controllers;
 /// Controller for home views.
 /// </summary>
 /// <param name="logger">Logger for this controller.</param>
-public class HomeController(ILogger<HomeController> logger) : Controller
+public class HomeController : Controller
 {
+
+    private readonly ILogger<HomeController> _logger;
+
+    private readonly VictuzWebDatabaseContext _context;
+
+
+
+    public HomeController(ILogger<HomeController> logger, VictuzWebDatabaseContext context)
+    {
+        _logger = logger;
+        _context = context;
+    }
+
+
     /// <summary>
     /// Index view call.
     /// </summary>

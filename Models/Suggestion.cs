@@ -28,5 +28,8 @@ public class Suggestion : Entity
 
     public string? Image { get; set; }
 
+
+    public List<User>? Likes { get; set; } = new List<User>();
+
     //TODO: ToGathering method
 }

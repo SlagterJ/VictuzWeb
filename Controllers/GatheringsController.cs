@@ -55,7 +55,7 @@ namespace VictuzWeb.Controllers
                 return NotFound();
             }
 
-            var gathering = await _context.Gatherings.FirstOrDefaultAsync(m => m.Identifier == id);
+            var gathering = await _context.Gatherings.Include(u => u.RegisteredUsers).FirstOrDefaultAsync(m => m.Identifier == id);
             if (gathering == null)
             {
                 return NotFound();
@@ -137,13 +137,45 @@ namespace VictuzWeb.Controllers
             [Bind(
                 "MaxUsers,DeadlineDate,BeginDateTime,EndDateTime,Name,Description,Identifier,CreatedAt"
             )]
-                Gathering gathering
+                Gathering gathering , IFormFile Image
         )
         {
             var claimIdentifier = User.FindFirst(ClaimTypes.NameIdentifier);
             if (claimIdentifier == null)
                 return View(gathering);
             gathering.SuggestedByIdentifier = uint.Parse(claimIdentifier.Value);
+
+
+            var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
+            string userId = userIdClaim.Value; // Dit is de UserId
+
+            gathering.SuggestedByIdentifier = Convert.ToUInt32(userId);
+
+            TempData["SuccessMessage"] = "Bedankt voor uw inzending!";
+
+
+            var uploadsFolder = Path.Combine("wwwroot/img");
+            var fileExtension = Path.GetExtension(Image.FileName);
+            var uniqueFileName = $"{"suggestion"}_{gathering.SuggestedByIdentifier}_{DateTime.Now:yyyyMMdd_HHmmss}{fileExtension}";
+
+            var filePath = Path.Combine(uploadsFolder, uniqueFileName);
+
+
+            gathering.Image = uniqueFileName;
+            ModelState.Remove("Image");
+
+
+            // Save the file to the server
+            using (var fileStream = new FileStream(filePath, FileMode.Create))
+            {
+                await Image.CopyToAsync(fileStream);
+            }
+
+
+
+
+
+
 
             if (ModelState.IsValid)
             {
