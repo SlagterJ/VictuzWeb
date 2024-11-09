@@ -39,10 +39,31 @@ button.accept-policy {
   line-height: inherit;
 }
 
+main {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-content: center;
+  align-items: center;
+}
+
 .footer {
   position: absolute;
+  margin-top: 100px;
   bottom: 0;
   width: 100%;
   white-space: nowrap;
   line-height: 60px;
+  padding: 0 50px !important;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: 1fr;
+}
+
+.footer .container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-content: center;
 }

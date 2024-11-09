@@ -1,8 +1,24 @@
-﻿@{
+﻿@model VictuzWeb.ViewModels.HomeViewModel;
+
+@{
     ViewData["Title"] = "Home Page";
 }
 
-<section class="landing">
-    <h1 class="animate__animated animate__fadeIn home_title">Victuz</h1>
-    <p class="animate__animated animate__fadeIn home_subtitle">Verenigde ICT'ers Uit Zuyd Limburg</p>
+<section class="gatherings">
+    <h1>Activiteiten die binnenkort plaatsvinden.</h1>
+    <div class="gatheringCards">
+        @foreach (var gathering in Model.Gatherings)
+        {
+            <div class="card">
+                <img src="/Img/@gathering.Image" class="card-img-top" alt="Afbeelding voor de activiteit '@gathering.Name'.">
+                <div class="card-body">
+                    <h5 class="card-title">@Html.DisplayFor(modelItem => gathering.Name) (@Html.DisplayFor(modelItem => gathering.BeginDateTime))</h5>
+                    <p class="card-text">@Html.DisplayFor(modelItem => gathering.Description)</p>
+                    <a asp-controller="Gatherings" asp-action="Details" asp-route-id="@gathering.Identifier" class="btn btn-primary">Naar activiteit</a>
+                </div>
+            </div>
+        }
+    </div>
+
+    <a asp-controller="Gatherings" asp-action="Index" class="btn btn-primary">Zie alle activiteiten</a>
 </section>

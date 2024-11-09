@@ -74,17 +74,30 @@
             </div>
         </nav>
     </header>
-    <div class="container">
-        <main role="main" class="pb-3">
+    <div class="container" style="padding-bottom: 50px;">
+        <main role="main" class="pb-5">
             @RenderBody()
         </main>
     </div>
 
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy;2024 | Groep 2oompa2loompa
-        </div>
-    </footer>
+<footer class="border-top footer text-muted">
+    <div class="container">
+        <p>&copy;2024 - 2oompa2loompa</p>
+    </div>
+    <div class="container">
+        <p>Onze sponsoren:</p>
+        <ul>
+            <li>Zuyd Hogeschool</li>
+            <li>Gemeente Heerlen</li>
+        </ul>
+    </div>
+    <div class="container">
+        <p>Links:</p>
+        <ul>
+            <li><a href="https://zuyd.nl/">Zuyd Hogeschool</a></li>
+        </ul>
+    </div>
+</footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
