@@ -11,7 +11,8 @@ public class UsersController(VictuzWebDatabaseContext context) : Controller
     public async Task<IActionResult> Members()
     {
         return View(await context.Users
-            .Where(u => u.IsMember == true)
+            .Include(u => u.Role)
+            .Where(u => u.IsMember == true && u.Role != null && u.Role.Name != "Admin")
             .ToListAsync());
     }
 }
