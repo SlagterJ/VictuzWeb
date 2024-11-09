@@ -45,7 +45,9 @@
 
                             @if (User.IsInRole("Admin"))
                             {
-
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Users" asp-action="Members">Leden</a>
+                                </li>
                             }
                             if (User.IsInRole("User"))
                             {
