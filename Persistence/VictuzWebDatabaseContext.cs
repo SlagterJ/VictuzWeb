@@ -117,6 +117,7 @@ public class VictuzWebDatabaseContext : DbContext
             BirthDate = DateOnly.FromDateTime(DateTime.Now.AddYears(-20)),
             PasswordHash = "password123",
             RoleIdentifier = 1,
+            IsMember = true,
         };
 
         var mielUser = new User()
@@ -128,6 +129,8 @@ public class VictuzWebDatabaseContext : DbContext
             BirthDate = DateOnly.FromDateTime(DateTime.Now.AddYears(-20)),
             PasswordHash = "password123456",
             RoleIdentifier = 2,
+            IsMember = true,
+
         };
 
         modelBuilder.Entity<Role>().HasData(userRole);

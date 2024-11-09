@@ -6,6 +6,10 @@
 /// </summary>
 public class Gathering : Suggestion
 {
+
+    public required bool IsMemberOnly { get; set; }
+
+
     /// <summary>
     /// The maximum amount of users that are allowed to attend this gathering.
     /// </summary>

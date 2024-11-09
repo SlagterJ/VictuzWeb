@@ -20,8 +20,22 @@ namespace VictuzWeb.Controllers
         // GET: Gatherings
         public async Task<IActionResult> Index()
         {
-            var Gatherings = await _context
-                .Gatherings.Include(a => a.RegisteredUsers)
+            bool isMember = bool.TryParse(User.FindFirst(CustomClaimTypes.Member)?.Value, out bool memberStatus) && memberStatus;
+
+
+            var Gatherings =  _context.Gatherings
+                .Include(a => a.RegisteredUsers)
+                .AsQueryable();
+
+
+            if(!isMember)
+            {
+                Gatherings = Gatherings.Where(g => g.IsMemberOnly == false);
+            }
+
+
+
+            var gatheringss = await Gatherings
                 .Select(j => new GatheringsViewModel
                 {
                     Identifier = j.Identifier,
@@ -44,7 +58,8 @@ namespace VictuzWeb.Controllers
                 })
                 .ToListAsync();
 
-            return View(Gatherings);
+
+            return View(gatheringss);
         }
 
         // GET: Gatherings/Details/5

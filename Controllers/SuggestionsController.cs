@@ -256,7 +256,8 @@ namespace VictuzWeb.Controllers
                 MaxUsers = 100,  // Voorbeeldwaarde
                 DeadlineDate = DateOnly.FromDateTime(DateTime.Now.AddMonths(1)),  // Voorbeeldwaarde
                 BeginDateTime = DateTime.Now.AddDays(1),  // Voorbeeldwaarde
-                EndDateTime = DateTime.Now.AddDays(1).AddHours(3)  // Voorbeeldwaarde
+                EndDateTime = DateTime.Now.AddDays(1).AddHours(3),  // Voorbeeldwaarde
+                IsMemberOnly = true,
             };
 
             if (gathering == null)
@@ -271,7 +272,7 @@ namespace VictuzWeb.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> SuggesToGatherings(uint Identifier, [Bind("MaxUsers,DeadlineDate,BeginDateTime,EndDateTime,Name,Description,Identifier,CreatedAt,SuggestedByIdentifier,Image")] Gathering gathering)
+        public async Task<IActionResult> SuggesToGatherings(uint Identifier, [Bind("MaxUsers,DeadlineDate,BeginDateTime,EndDateTime,Name,Description,Identifier,CreatedAt,SuggestedByIdentifier,Image,IsMemberOnly")] Gathering gathering)
         {
             if (Identifier != gathering.Identifier)
             {
@@ -312,6 +313,7 @@ namespace VictuzWeb.Controllers
                         DeadlineDate = gathering.DeadlineDate,
                         BeginDateTime = gathering.BeginDateTime,
                         EndDateTime = gathering.EndDateTime,
+                        IsMemberOnly = gathering.IsMemberOnly,
                     };
 
                     // Voeg de nieuwe Gathering toe aan de context

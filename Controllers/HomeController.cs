@@ -1,6 +1,7 @@
 using System.Diagnostics;
 using LanguageExt;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using VictuzWeb.Models;
 using VictuzWeb.Persistence;
 using VictuzWeb.ViewModels;
@@ -18,7 +19,20 @@ public class HomeController(VictuzWebDatabaseContext context) : Controller
     /// <returns>Index view.</returns>
     public IActionResult Index()
     {
-        var gatheringsUnsorted = context.Gatherings.ToList();
+
+        bool isMember = bool.TryParse(User.FindFirst(CustomClaimTypes.Member)?.Value, out bool memberStatus) && memberStatus;
+
+
+        var Gatherings = context.Gatherings
+            .AsQueryable();
+
+
+        if (!isMember)
+        {
+            Gatherings = Gatherings.Where(g => g.IsMemberOnly == false);
+        }
+
+        var gatheringsUnsorted = Gatherings.ToList();
 
         var gatheringsUnfiltered = Gathering.OrderyByDateTimeAscending(gatheringsUnsorted);
 

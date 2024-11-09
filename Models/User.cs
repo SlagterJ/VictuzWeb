@@ -60,5 +60,6 @@ public class User : Entity
 
     public IEnumerable<Suggestion>? Likes { get; set; }
 
+    public required bool IsMember { get; set; }
 
 }

@@ -41,7 +41,8 @@ public class AccountController : Controller
                 {
                     new Claim(ClaimTypes.Name, user.Username),
                     new Claim(ClaimTypes.Role, user.Role.Name),
-                    new Claim(ClaimTypes.NameIdentifier, user.Identifier.ToString())
+                    new Claim(ClaimTypes.NameIdentifier, user.Identifier.ToString()),
+                    new Claim(CustomClaimTypes.Member, user.IsMember.ToString())
                 };
 
 
@@ -75,6 +76,8 @@ public class AccountController : Controller
     {
         var role = await _context.Roles.FirstAsync(x => x.Identifier == 1);
         User.Role = role;
+        User.IsMember = false;
+
         if (ModelState.IsValid)
         {
             _context.Add(User);
