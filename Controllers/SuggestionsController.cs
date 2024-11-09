@@ -69,7 +69,7 @@ namespace VictuzWeb.Controllers
 
             var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
             string userId = userIdClaim.Value; // Dit is de UserId
-            
+
 
 
             var suggestion = await _context.Suggestions
@@ -227,8 +227,8 @@ namespace VictuzWeb.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-
-        public async Task<IActionResult> SuggesToGatherings(ulong? id)
+        [Authorize(Roles = "Admin")]
+        public async Task<IActionResult> SuggestionToGatherings(ulong? id)
         {
             if (id == null)
             {
@@ -279,7 +279,7 @@ namespace VictuzWeb.Controllers
                 return NotFound();
             }
 
-            
+
             if (ModelState.IsValid)
             {
                 try

@@ -32,12 +32,16 @@
 </div>
 <div>
 
-    <a asp-action="SuggesToGatherings" asp-route-id="@Model.Identifier">maak Gatherings</a>|
-    <a asp-action="Edit" asp-route-id="@Model?.Identifier">Edit</a>|
+    @if (User.IsInRole("Admin"))
+    {
+        <a asp-action="SuggestionToGatherings" asp-route-id="@Model.Identifier">Maak Gathering</a>
+        @: |
+    }
+    <a asp-action="Edit" asp-route-id="@Model?.Identifier">Edit</a> |
     <a asp-action="Index">Back to List</a>
 
 
-    
+
 
 
         @if(Model.Likes.Count() == 0)
