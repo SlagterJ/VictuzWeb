@@ -34,7 +34,7 @@
 
     @if (User.IsInRole("Admin"))
     {
-        <a asp-action="SuggestionToGatherings" asp-route-id="@Model.Identifier">Maak Gathering</a>
+        <a asp-action="SuggestionToGathering" asp-route-id="@Model.Identifier">Maak Gathering</a>
         @: |
     }
     <a asp-action="Edit" asp-route-id="@Model?.Identifier">Edit</a> |

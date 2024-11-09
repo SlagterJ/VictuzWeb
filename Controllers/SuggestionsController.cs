@@ -228,7 +228,7 @@ namespace VictuzWeb.Controllers
         }
 
         [Authorize(Roles = "Admin")]
-        public async Task<IActionResult> SuggestionToGatherings(ulong? id)
+        public async Task<IActionResult> SuggestionToGathering(ulong? id)
         {
             if (id == null)
             {
@@ -272,7 +272,8 @@ namespace VictuzWeb.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> SuggesToGatherings(uint Identifier, [Bind("MaxUsers,DeadlineDate,BeginDateTime,EndDateTime,Name,Description,Identifier,CreatedAt,SuggestedByIdentifier,Image,IsMemberOnly")] Gathering gathering)
+        [Authorize(Roles = "Admin")]
+        public async Task<IActionResult> SuggestionToGathering(uint Identifier, [Bind("MaxUsers,DeadlineDate,BeginDateTime,EndDateTime,Name,Description,Identifier,CreatedAt,SuggestedByIdentifier,Image,IsMemberOnly")] Gathering gathering)
         {
             if (Identifier != gathering.Identifier)
             {
