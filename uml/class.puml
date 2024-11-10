@@ -32,6 +32,8 @@ class Suggestion {
   + string Name
   + string Description
   + User SuggestedBy
+  + string Image
+  + IEnumerable Likes
 
   + Gathering ToGathering()
 }
@@ -45,6 +47,7 @@ class Gathering {
   + DateOnly DeadlineDate
   + DateTime BeginDateTime
   + DateTime EndDateTime
+  + Bool IsMemberOnly
 }
 Suggestion <|-- Gathering
 
@@ -54,6 +57,7 @@ class Club {
     + bool Accepted
     + string Name
     + User Owner
+    + String Image
 }
 Entity <|-- Club
 
