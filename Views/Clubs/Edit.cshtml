@@ -1,10 +1,10 @@
 ﻿@model VictuzWeb.Models.Club
 
 @{
-    ViewData["Title"] = "Edit";
+    ViewData["Title"] = "Bewerken";
 }
 
-<h1>Edit</h1>
+<h1>Bewerken</h1>
 
 <h4>Club</h4>
 <hr />
@@ -14,24 +14,24 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group form-check">
                 <label class="form-check-label">
-                    <input class="form-check-input" asp-for="Accepted" /> @Html.DisplayNameFor(model => model.Accepted)
+                    <input class="form-check-input" asp-for="Accepted" /> Geaccepteerd
                 </label>
             </div>
             <div class="form-group">
-                <label asp-for="Name" class="control-label"></label>
+                <label asp-for="Name" class="control-label">Naam</label>
                 <input asp-for="Name" class="form-control" />
                 <span asp-validation-for="Name" class="text-danger"></span>
             </div>
             <input type="hidden" asp-for="Identifier" />
             <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
+                <input type="submit" value="Opslaan" class="btn btn-primary" />
             </div>
         </form>
     </div>
 </div>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Index">Terug naar lijst</a>
 </div>
 
 @section Scripts {

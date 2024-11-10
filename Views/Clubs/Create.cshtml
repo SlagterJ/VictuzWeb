@@ -1,10 +1,10 @@
 ﻿@model VictuzWeb.Models.Club
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Club aanmaken";
 }
 
-<h1>Create</h1>
+<h1>Aanmaken</h1>
 
 <h4>Club</h4>
 <hr />
@@ -18,7 +18,7 @@
                 @if (User.IsInRole("Admin"))
                 {
                     <label class="form-check-label">
-                        <input class="form-check-input" asp-for="Accepted" /> @Html.DisplayNameFor(model => model.Accepted)
+                        <input class="form-check-input" asp-for="Accepted" /> Geaccepteerd
                     </label>
                 }
                 @if (User.IsInRole("User"))
@@ -30,13 +30,13 @@
 
             </div>
             <div class="form-group">
-                <label asp-for="Name" class="control-label"></label>
+                <label asp-for="Name" class="control-label">Naam</label>
                 <input asp-for="Name" class="form-control" />
                 <span asp-validation-for="Name" class="text-danger"></span>
             </div>
 
             <div class="form-group">
-                <label asp-for="Image" class="control-label"></label>
+                <label asp-for="Image" class="control-label">Afbeelding</label>
                 <input type="file" asp-for="Image" class="form-control" />
                 <span asp-validation-for="Image" class="text-danger"></span>
             </div>
@@ -49,7 +49,7 @@
 </div>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Index">Terug naar lijst</a>
 </div>
 
 @section Scripts {

@@ -7,23 +7,23 @@
 <h1>Details</h1>
 
 <div>
-    <h4>Suggestion</h4>
+    <h4>Suggestie</h4>
     <hr />
     <dl class="row">
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Name)
+            Naam
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.Name)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Description)
+            Beschrijving
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.Description)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.CreatedAt)
+            Aanmaakdatum
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.CreatedAt)
@@ -37,8 +37,8 @@
         <a asp-action="SuggestionToGathering" asp-route-id="@Model.Identifier">Maak Gathering</a>
         @: |
     }
-    <a asp-action="Edit" asp-route-id="@Model?.Identifier">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Edit" asp-route-id="@Model?.Identifier">Bewerken</a> |
+    <a asp-action="Index">Terug naar lijst</a>
 
 
 
@@ -60,7 +60,7 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="Identifier" />
             <div class="form-group">
-                <input type="submit" value="remove Like" class="btn btn-primary" style="margin-top:5px" />
+                <input type="submit" value="Like weghalen" class="btn btn-primary" style="margin-top:5px" />
             </div>
         </form>
         }
