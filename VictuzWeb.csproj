@@ -20,10 +20,18 @@
     </PackageReference>
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="8.0.6" />
     <PackageReference Include="Portable.BouncyCastle" Version="1.9.0" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.9.0" />
+    <PackageReference Include="Swashbuckle.AspNetCore.Swagger" Version="6.9.0" />
   </ItemGroup>
 
   <ItemGroup>
     <Folder Include="wwwroot\Img\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <_ContentIncludedByDefault Remove="VictuzWebAPI\obj\project.assets.json" />
+    <_ContentIncludedByDefault Remove="VictuzWebAPI\obj\project.packagespec.json" />
+    <_ContentIncludedByDefault Remove="VictuzWebAPI\obj\VictuzWebAPI.csproj.nuget.dgspec.json" />
   </ItemGroup>
 
 </Project>

@@ -12,6 +12,9 @@ public class Program
         // Add services to the container.
         builder.Services.AddControllersWithViews();
         builder.Services.AddDbContext<VictuzWebDatabaseContext>();
+        builder.Services.AddRouting((options) => options.LowercaseUrls = true);
+        builder.Services.AddEndpointsApiExplorer();
+        builder.Services.AddSwaggerGen();
 
 
 
@@ -30,6 +33,19 @@ public class Program
                 //// Sliding expiration verlengt de geldigheid als de gebruiker actief blijft
                 //options.SlidingExpiration = true;
 
+            });
+
+        // Fix for infinite cycle on n:n relations
+        builder
+            .Services.AddControllers()
+            .AddJsonOptions(options =>
+            {
+                options.JsonSerializerOptions.ReferenceHandler = System
+                    .Text
+                    .Json
+                    .Serialization
+                    .ReferenceHandler
+                    .IgnoreCycles;
             });
 
 
@@ -52,6 +68,15 @@ public class Program
         app.UseRouting();
 
         app.UseAuthorization();
+
+        app.UseSwagger();
+        app.UseSwaggerUI(
+            (config) =>
+            {
+                config.SwaggerEndpoint("/swagger/v1/swagger.json", "VictuzWeb");
+                config.RoutePrefix = "swagger";
+            }
+        );
 
         app.MapControllerRoute(name: "default", pattern: "{controller=Home}/{action=Index}/{identifier?}");
 
